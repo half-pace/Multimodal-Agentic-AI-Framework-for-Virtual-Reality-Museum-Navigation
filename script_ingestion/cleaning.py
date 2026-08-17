@@ -27,6 +27,11 @@ def normalize_whitespace(text: str) -> str:
             
     return "\n".join(cleaned_lines).strip()
 
+def validate_cleaned_text(text: str) -> bool:
+    """ Validates the cleaned text - returns true when cleaned text contains usable content """
+    
+    return bool(text.strip())
+
 def clean_file(input_path: Path, output_path: Path) -> None:
     """ Reads the texts from the input markdown file, cleans it, and saves it to the output path """
     
@@ -34,8 +39,13 @@ def clean_file(input_path: Path, output_path: Path) -> None:
     
     cleaned_text = normalize_whitespace(text)
     
+    if not validate_cleaned_text(cleaned_text):
+        print(f"Skipping empty file: {input_path}")
+        return
+    
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(cleaned_text, encoding="utf-8")
+    
     
 def run_cleaning(input_folder: Path, output_folder: Path) -> None:
     """ Runs the cleaning function / finds and processes all files """

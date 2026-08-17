@@ -7,13 +7,23 @@
 #     if ord(character) < 32:
 #         print(repr(character), ord(character))
 
-sample = "Hello\r\nWorld\rTest\nAgain"
+# sample = "Hello\r\nWorld\rTest\nAgain"
 
-print("Before: ")
-print(repr(sample))
+# print("Before: ")
+# print(repr(sample))
 
-sample = sample.replace("\r\n", "\n")
-sample = sample.replace("\r", "\n")
+# sample = sample.replace("\r\n", "\n")
+# sample = sample.replace("\r", "\n")
 
-print("After: ")
-print(repr(sample))
+# print("After: ")
+# print(repr(sample))
+
+def validate_cleaned_text(text: str) -> bool:
+    return bool(text.strip())
+
+
+print(validate_cleaned_text("Hello world"))
+print(validate_cleaned_text(""))
+print(validate_cleaned_text("     "))
+print(validate_cleaned_text("\n\n"))
+print(validate_cleaned_text("Castor\nRicinus communis"))

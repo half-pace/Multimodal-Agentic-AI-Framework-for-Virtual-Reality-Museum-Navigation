@@ -4,6 +4,10 @@ def normalize_whitespace(text: str) -> str:
     """ Cleans extracted texts by normalizing whitespaces """
     
     text = text.replace("\u00a0", " ")
+    
+    text = text.replace("\r\n", "\n")
+    text = text.replace("\r", "\n")
+    
     lines = text.splitlines()
     
     cleaned_lines = []

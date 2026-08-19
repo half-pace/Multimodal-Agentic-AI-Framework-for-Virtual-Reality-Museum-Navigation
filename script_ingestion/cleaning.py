@@ -34,19 +34,21 @@ def validate_cleaned_text(text: str) -> bool:
 
 def clean_file(input_path: Path, output_path: Path) -> None:
     """ Reads the texts from the input markdown file, cleans it, and saves it to the output path """
+    try:
+        
+        text = input_path.read_text(encoding="utf-8")
     
-    text = input_path.read_text(encoding="utf-8")
+        cleaned_text = normalize_whitespace(text)
     
-    cleaned_text = normalize_whitespace(text)
+        if not validate_cleaned_text(cleaned_text):
+            print(f"Skipping empty file: {input_path}")
+            return
     
-    if not validate_cleaned_text(cleaned_text):
-        print(f"Skipping empty file: {input_path}")
-        return
-    
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(cleaned_text, encoding="utf-8")
-    
-    
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(cleaned_text, encoding="utf-8")
+    except OSError as error: #OSERROR because it covers many filesystem-related problems
+        print(f"Error processing file {input_path}: {error}")
+
 def run_cleaning(input_folder: Path, output_folder: Path) -> None:
     """ Runs the cleaning function / finds and processes all files """
     

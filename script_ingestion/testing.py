@@ -18,12 +18,28 @@
 # print("After: ")
 # print(repr(sample))
 
-def validate_cleaned_text(text: str) -> bool:
-    return bool(text.strip())
+# def validate_cleaned_text(text: str) -> bool:
+#     return bool(text.strip())
 
 
-print(validate_cleaned_text("Hello world"))
-print(validate_cleaned_text(""))
-print(validate_cleaned_text("     "))
-print(validate_cleaned_text("\n\n"))
-print(validate_cleaned_text("Castor\nRicinus communis"))
+# print(validate_cleaned_text("Hello world"))
+# print(validate_cleaned_text(""))
+# print(validate_cleaned_text("     "))
+# print(validate_cleaned_text("\n\n"))
+# print(validate_cleaned_text("Castor\nRicinus communis"))
+
+#chunking testing
+
+text = "abcdefghij"
+def chunk_text(text: str, chunk_size: int, overlap: int) -> list[str]:
+    chunked = []
+    start = 0
+    step = chunk_size - overlap
+    while start < len(text):
+        chunk = text[start:start + chunk_size]
+        chunked.append(chunk)
+        start += step
+    return chunked
+    
+chunks = chunk_text(text, chunk_size=4, overlap=2)
+print(chunks)

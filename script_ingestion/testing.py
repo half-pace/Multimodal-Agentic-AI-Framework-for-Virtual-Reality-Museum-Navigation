@@ -29,9 +29,17 @@
 # print(validate_cleaned_text("Castor\nRicinus communis"))
 
 #chunking testing
+#we will use raise to raise and error deliberately - we will use ValueError
 
 text = "abcdefghij"
 def chunk_text(text: str, chunk_size: int, overlap: int) -> list[str]:
+    if chunk_size <= 0:
+        raise ValueError("Chunk size must be greater than 0")
+    elif overlap >= chunk_size:
+        raise ValueError("Overlap must be less than chunk size")
+    elif overlap < 0:
+        raise ValueError("Overlap must be greater than or equal to 0")
+
     chunked = []
     start = 0
     step = chunk_size - overlap
@@ -41,5 +49,12 @@ def chunk_text(text: str, chunk_size: int, overlap: int) -> list[str]:
         start += step
     return chunked
     
-chunks = chunk_text(text, chunk_size=4, overlap=2)
-print(chunks)
+try:
+    chunk_text(text, chunk_size=0, overlap=0)
+    #chunk_text(text, chunk_size=4, overlap=-1)
+    #chunk_text(text, chunk_size=4, overlap=4)
+    #chunk_text(text, chunk_size=4, overlap=5)
+except ValueError as e:
+    print(f"Error: {e}")    
+#chunks = chunk_text(text, chunk_size=4, overlap=2)
+#print(chunks)

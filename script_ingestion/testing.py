@@ -143,8 +143,6 @@
 #         final_chunks.append(chunk)
 #     return final_chunks
 
-
-
 # try:
 #     chunks = create_chunks(text, chunk_size=4, overlap=2, source="test_source.md", document_id="DOC_001")
 #     for chunk in chunks:
@@ -156,7 +154,7 @@
 
 #testing 4
 from dataclasses import dataclass
-import hashlib
+import hashlib, uuid
 # print(hashlib.sha256(b"Hello world").hexdigest())
 
 text1 = "Castor is a food plant."
@@ -170,15 +168,23 @@ class Document:
     content_hash: str
     version: int
 
+def generate_document_id() -> str:
+    return str(uuid.uuid4())
 
 def calculate_hash(input_string: str) -> str:
     hashlib_object = hashlib.sha256(input_string.encode("utf-8"))
     return hashlib_object.hexdigest()
     
 document_obj = Document(
-    document_id="DOC_001",
+    document_id=generate_document_id(),
     source="test_source.md",
     content_hash=calculate_hash(text1),
+    version=1
+)
+document_obj1 = Document(
+    document_id=generate_document_id(),
+    source="test_source.md",
+    content_hash=calculate_hash(text2),
     version=1
 )
 
@@ -210,3 +216,5 @@ print(document_obj)
 update_document(document_obj, has_content_changed(old_hash, new_hash_same), new_hash_same)
 update_document(document_obj, has_content_changed(old_hash, new_hash_changed), new_hash_changed)
 print(document_obj)
+
+print(document_obj1)

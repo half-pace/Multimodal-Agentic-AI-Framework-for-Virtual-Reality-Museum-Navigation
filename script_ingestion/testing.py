@@ -234,4 +234,25 @@ print(document_registry)
 print(find_document("castor.pdf"))
 print(find_document("eri.pdf"))
 
-#testing 5
+#testing 5 - file discovery 
+from pathlib import Path
+
+root = Path("knowledge_base/01_raw_data")
+file = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf")
+
+def get_relative_source(file: Path, root: Path): #answers - Where is this file relative to our knowledge-base root?
+    return file.relative_to(root)
+
+
+def discover_files(folder: Path):
+    discovered_files = []
+    for file in folder.rglob("*"):
+        if file.is_file():
+            print(file)
+            discovered_files.append(file)
+    return discovered_files
+
+files = discover_files(root)
+print(files)
+
+print(get_relative_source(file, root))

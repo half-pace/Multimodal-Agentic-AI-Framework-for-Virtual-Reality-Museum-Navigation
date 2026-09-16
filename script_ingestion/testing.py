@@ -161,6 +161,8 @@ text1 = "Castor is a food plant."
 text2 = "Castor is a food plant."
 text3 = "Castor is an important food plant."
 
+document_registry = {}
+
 @dataclass
 class Document:
     document_id: str
@@ -177,16 +179,26 @@ def calculate_hash(input_string: str) -> str:
     
 document_obj = Document(
     document_id=generate_document_id(),
-    source="test_source.md",
+    source="castor.pdf",
     content_hash=calculate_hash(text1),
     version=1
 )
 document_obj1 = Document(
     document_id=generate_document_id(),
-    source="test_source.md",
+    source="eri_silkworm.pdf",
     content_hash=calculate_hash(text2),
     version=1
 )
+
+document_registry.update({document_obj.source: document_obj, document_obj1.source: document_obj1})
+
+def find_document(source: str): #search document_registry using source and return corresponding Document
+    for document in document_registry.keys():
+        if source == document:
+            print(f"Document found: {document_registry[document]}")
+            return document_registry[document]
+    
+    return None
 
 def has_content_changed(existing_hash: str, new_hash: str) -> bool:
     if existing_hash == new_hash:
@@ -218,3 +230,8 @@ update_document(document_obj, has_content_changed(old_hash, new_hash_changed), n
 print(document_obj)
 
 print(document_obj1)
+print(document_registry)
+print(find_document("castor.pdf"))
+print(find_document("eri.pdf"))
+
+#testing 5

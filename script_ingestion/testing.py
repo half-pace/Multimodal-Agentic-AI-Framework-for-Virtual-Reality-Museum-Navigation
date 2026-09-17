@@ -273,8 +273,32 @@ def save_document_registry(path: Path) -> None:
     data = {}
     
     for source, document in document_registry.items(): #convert document object into a dictionary too
-        ...
-
+        document_data = {
+            "document_id": document.document_id,
+            "source": document.source,
+            "content_hash": document.content_hash,
+            "version": document.version
+        }
+        
+        data[source] = document_data
+    
+    with path.open("w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4)
+        
+def load_document_registry(path: Path) -> None: #reverse of save_document_registry - load the document registry from a JSON file
+    if path.exists():
+        with path.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+            for source, document_data in data.items():
+                document_obj = Document(
+                    document_id=document_data["document_id"],
+                    source=document_data["source"],
+                    content_hash=document_data["content_hash"],
+                    version=document_data["version"]
+                )
+                document_registry[source] = document_obj
+    
+        
 files = discover_files(root)
 print(files)
 print(get_relative_source(file, root))
@@ -285,3 +309,10 @@ print(get_document_status("processes/Traditionalweaving_Process1.pdf"))
 print(get_processing_status("processes/Traditionalweaving_Process.pdf", new_hash_changed))
 print(get_processing_status("processes/Traditionalweaving_Process.pdf", new_hash_same))
 print(get_processing_status("processes/Traditionalweaving_Process1.pdf", new_hash_same))
+save_document_registry(Path("knowledge_base/document_manifest.json"))
+
+document_registry.clear()  # Clear the current registry to simulate a fresh start
+print(document_registry)
+
+load_document_registry(Path("knowledge_base/document_manifest.json"))
+print(document_registry)

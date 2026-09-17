@@ -185,14 +185,14 @@ document_obj = Document(
 )
 document_obj1 = Document(
     document_id=generate_document_id(),
-    source="eri_silkworm.pdf",
+    source="processes/Traditionalweaving_Process.pdf",
     content_hash=calculate_hash(text2),
     version=1
 )
 
 document_registry.update({document_obj.source: document_obj, document_obj1.source: document_obj1})
 
-def find_document(source: str): #search document_registry using source and return corresponding Document
+def find_document(source: str) -> Document | None: #search document_registry using source and return corresponding Document
     for document in document_registry.keys():
         if source == document:
             print(f"Document found: {document_registry[document]}")
@@ -236,6 +236,7 @@ print(find_document("eri.pdf"))
 
 #testing 5 - file discovery 
 from pathlib import Path
+import json
 
 root = Path("knowledge_base/01_raw_data")
 file = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf")
@@ -252,7 +253,35 @@ def discover_files(folder: Path):
             discovered_files.append(file)
     return discovered_files
 
+def is_document_registered(source: str) -> bool:
+    return source in document_registry
+
+def get_document_status(source: str) -> str:
+    return "existing" if source in document_registry else "new"
+
+def get_processing_status(source: str, new_hash: str) -> str:
+    if is_document_registered(source):
+        existing_document = find_document(source)
+        if existing_document:
+            if has_content_changed(existing_document.content_hash, new_hash):
+                return "changed"
+            else:
+                return "unchanged"
+    return "new"
+
+def save_document_registry(path: Path) -> None:
+    data = {}
+    
+    for source, document in document_registry.items(): #convert document object into a dictionary too
+        ...
+
 files = discover_files(root)
 print(files)
-
 print(get_relative_source(file, root))
+print(is_document_registered("processes/Traditionalweaving_Process.pdf"))
+print(is_document_registered("processes/Traditionalweaving_Process1.pdf"))
+print(get_document_status("processes/Traditionalweaving_Process.pdf"))
+print(get_document_status("processes/Traditionalweaving_Process1.pdf"))
+print(get_processing_status("processes/Traditionalweaving_Process.pdf", new_hash_changed))
+print(get_processing_status("processes/Traditionalweaving_Process.pdf", new_hash_same))
+print(get_processing_status("processes/Traditionalweaving_Process1.pdf", new_hash_same))

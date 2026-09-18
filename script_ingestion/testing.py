@@ -154,7 +154,11 @@
 
 #testing 4
 from dataclasses import dataclass
-import hashlib, uuid
+from pathlib import Path
+import hashlib, uuid, json
+from extraction import *
+from cleaning import *
+
 # print(hashlib.sha256(b"Hello world").hexdigest())
 
 text1 = "Castor is a food plant."
@@ -180,13 +184,13 @@ def calculate_hash(input_string: str) -> str:
 document_obj = Document(
     document_id=generate_document_id(),
     source="castor.pdf",
-    content_hash=calculate_hash(text1),
+    content_hash=calculate_hash(text1), #text1
     version=1
 )
 document_obj1 = Document(
     document_id=generate_document_id(),
     source="processes/Traditionalweaving_Process.pdf",
-    content_hash=calculate_hash(text2),
+    content_hash=calculate_hash(text2), #text2
     version=1
 )
 
@@ -235,14 +239,15 @@ print(find_document("castor.pdf"))
 print(find_document("eri.pdf"))
 
 #testing 5 - file discovery 
-from pathlib import Path
-import json
+# from pathlib import Path
+# import json
 
 root = Path("knowledge_base/01_raw_data")
 file = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf")
 
 def get_relative_source(file: Path, root: Path): #answers - Where is this file relative to our knowledge-base root?
-    return file.relative_to(root)
+    relative_path = file.relative_to(root)
+    return relative_path.as_posix()  # Convert to POSIX-style path (with forward slashes)
 
 
 def discover_files(folder: Path):
@@ -297,8 +302,25 @@ def load_document_registry(path: Path) -> None: #reverse of save_document_regist
                     version=document_data["version"]
                 )
                 document_registry[source] = document_obj
+                            
+#pipeline process 
+def process_document(path: Path) -> str:
     
-        
+    extracted_file = extract_pdf_text(path)
+    cleaned_file = normalize_whitespace(extracted_file)
+    content_hash = calculate_hash(cleaned_file)
+    return content_hash
+
+def check_document(path: Path, root: Path) -> str:
+    relative_source = get_relative_source(path, root)
+    received_hash = process_document(path)
+    doc_status = get_processing_status(relative_source, received_hash)
+    
+    return doc_status
+
+def handle_document(path: Path, root: Path) -> None:
+    ...
+
 files = discover_files(root)
 print(files)
 print(get_relative_source(file, root))
@@ -316,3 +338,8 @@ print(document_registry)
 
 load_document_registry(Path("knowledge_base/document_manifest.json"))
 print(document_registry)
+test_doc_process = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf")
+print(process_document(test_doc_process))  # This will extract, clean, and hash the content of the PDF
+load_document_registry(Path("knowledge_base/document_manifest.json"))
+print(document_registry)
+print(check_document(test_doc_process, root))

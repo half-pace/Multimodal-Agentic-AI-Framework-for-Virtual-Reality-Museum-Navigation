@@ -355,10 +355,16 @@ def process_discovered_files(folder: Path, root: Path) -> None:
         else:
             print(f"No changes detected for document: {relative_source}")       
 
-
-files = discover_files(root)
-print(files)
-print(get_relative_source(file, root))
+def run_ingestion(raw_folder: Path, manifest_path: Path) -> None:
+    """Runs the ingestion pipeline by loading the registry,
+    processing discovered files, and saving the updated registry."""
+    load_document_registry(manifest_path)
+    process_discovered_files(raw_folder, raw_folder)
+    save_document_registry(manifest_path)   
+    
+    
+    
+    
 print(is_document_registered("processes/Traditionalweaving_Process.pdf"))
 print(is_document_registered("processes/Traditionalweaving_Process1.pdf"))
 print(get_document_status("processes/Traditionalweaving_Process.pdf"))
@@ -384,3 +390,5 @@ new_doc = create_document(
     "as1kj2kb4kqj2b3"
 )
 print(new_doc)
+
+

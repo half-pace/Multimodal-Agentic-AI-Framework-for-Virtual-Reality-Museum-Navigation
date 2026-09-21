@@ -318,8 +318,20 @@ def check_document(path: Path, root: Path) -> str:
     
     return doc_status
 
-def handle_document(path: Path, root: Path) -> None:
-    ...
+def create_document(source: str, content_hash: str) -> Document:
+    document_obj = Document(
+        document_id=generate_document_id(),
+        source=source,
+        content_hash=content_hash,
+        version=1
+    )
+    #document_registry[source] = document_obj
+    return document_obj    
+
+def register_document(document: Document) -> None:
+    """Update the document registry with the given document. If the document already exists, update its version and hash."""
+    document_registry[document.source] = document
+
 
 files = discover_files(root)
 print(files)
@@ -343,3 +355,9 @@ print(process_document(test_doc_process))  # This will extract, clean, and hash 
 load_document_registry(Path("knowledge_base/document_manifest.json"))
 print(document_registry)
 print(check_document(test_doc_process, root))
+
+new_doc = create_document(
+    "materials/example1.pdf",
+    "as1kj2kb4kqj2b3"
+)
+print(new_doc)

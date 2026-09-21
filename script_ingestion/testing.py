@@ -220,6 +220,7 @@ print(has_content_changed(old_hash, new_hash_same))  # Should print "Content has
 print(has_content_changed(old_hash, new_hash_changed))  # Should print "Content has changed." and return True
 
 def update_document(document: Document, changed: bool, new_hash: str) -> None:
+    """Updates the document's version and content hash if the content has changed."""
     if changed:
         document.version += 1
         document.content_hash = new_hash
@@ -312,6 +313,7 @@ def process_document(path: Path) -> str:
     return content_hash
 
 def check_document(path: Path, root: Path) -> str:
+    """Returns the status of the document"""
     relative_source = get_relative_source(path, root)
     received_hash = process_document(path)
     doc_status = get_processing_status(relative_source, received_hash)
@@ -319,6 +321,7 @@ def check_document(path: Path, root: Path) -> str:
     return doc_status
 
 def create_document(source: str, content_hash: str) -> Document:
+    """Creates a new Document object with a unique ID and version 1 automatically and returns it."""
     document_obj = Document(
         document_id=generate_document_id(),
         source=source,
@@ -331,6 +334,26 @@ def create_document(source: str, content_hash: str) -> Document:
 def register_document(document: Document) -> None:
     """Update the document registry with the given document. If the document already exists, update its version and hash."""
     document_registry[document.source] = document
+
+def process_discovered_files(folder: Path, root: Path) -> None:
+    """Processes all discovered files in the given path, checking their status and updating the document registry accordingly."""
+    discovered_files = discover_files(folder)
+    for file in discovered_files:
+        relative_source = get_relative_source(file, root)
+        received_hash = process_document(file)
+        doc_status = get_processing_status(relative_source, received_hash)
+        
+        if doc_status == "new":
+            new_doc = create_document(relative_source, received_hash)
+            register_document(new_doc)
+            print(f"Registered new document: {new_doc}")
+        elif doc_status == "changed":
+            existing_doc = find_document(relative_source)
+            if existing_doc:
+                update_document(existing_doc, True, received_hash)
+                print(f"Updated existing document: {existing_doc}")
+        else:
+            print(f"No changes detected for document: {relative_source}")       
 
 
 files = discover_files(root)

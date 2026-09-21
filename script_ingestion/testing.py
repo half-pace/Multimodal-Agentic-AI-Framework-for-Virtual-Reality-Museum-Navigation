@@ -307,10 +307,17 @@ def load_document_registry(path: Path) -> None: #reverse of save_document_regist
 #pipeline process 
 def process_document(path: Path) -> str:
     
-    extracted_file = extract_pdf_text(path)
-    cleaned_file = normalize_whitespace(extracted_file)
-    content_hash = calculate_hash(cleaned_file)
-    return content_hash
+    if path.suffix == ".pdf":
+        extracted_file = extract_pdf_text(path)
+        cleaned_file = normalize_whitespace(extracted_file)
+        content_hash = calculate_hash(cleaned_file)
+        return content_hash
+    elif path.suffix == ".txt":
+        cleaned_file = normalize_whitespace(path.read_text(encoding="utf-8"))
+        content_hash = calculate_hash(cleaned_file)
+        return content_hash
+    else:
+        raise ValueError(f"Unsupported file type: {path.suffix}")
 
 def check_document(path: Path, root: Path) -> str:
     """Returns the status of the document"""
@@ -359,36 +366,41 @@ def run_ingestion(raw_folder: Path, manifest_path: Path) -> None:
     """Runs the ingestion pipeline by loading the registry,
     processing discovered files, and saving the updated registry."""
     load_document_registry(manifest_path)
+    # print("Registry after loading: ")
+    # print(document_registry)
+    
     process_discovered_files(raw_folder, raw_folder)
     save_document_registry(manifest_path)   
     
     
     
     
-print(is_document_registered("processes/Traditionalweaving_Process.pdf"))
-print(is_document_registered("processes/Traditionalweaving_Process1.pdf"))
-print(get_document_status("processes/Traditionalweaving_Process.pdf"))
-print(get_document_status("processes/Traditionalweaving_Process1.pdf"))
-print(get_processing_status("processes/Traditionalweaving_Process.pdf", new_hash_changed))
-print(get_processing_status("processes/Traditionalweaving_Process.pdf", new_hash_same))
-print(get_processing_status("processes/Traditionalweaving_Process1.pdf", new_hash_same))
-save_document_registry(Path("knowledge_base/document_manifest.json"))
+# print(is_document_registered("processes/Traditionalweaving_Process.pdf"))
+# print(is_document_registered("processes/Traditionalweaving_Process1.pdf"))
+# print(get_document_status("processes/Traditionalweaving_Process.pdf"))
+# print(get_document_status("processes/Traditionalweaving_Process1.pdf"))
+# print(get_processing_status("processes/Traditionalweaving_Process.pdf", new_hash_changed))
+# print(get_processing_status("processes/Traditionalweaving_Process.pdf", new_hash_same))
+# print(get_processing_status("processes/Traditionalweaving_Process1.pdf", new_hash_same))
+# save_document_registry(Path("knowledge_base/document_manifest.json"))
 
-document_registry.clear()  # Clear the current registry to simulate a fresh start
-print(document_registry)
+# document_registry.clear()  # Clear the current registry to simulate a fresh start
+# print(document_registry)
 
-load_document_registry(Path("knowledge_base/document_manifest.json"))
-print(document_registry)
-test_doc_process = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf")
-print(process_document(test_doc_process))  # This will extract, clean, and hash the content of the PDF
-load_document_registry(Path("knowledge_base/document_manifest.json"))
-print(document_registry)
-print(check_document(test_doc_process, root))
+# load_document_registry(Path("knowledge_base/document_manifest.json"))
+# print(document_registry)
+# test_doc_process = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf")
+# print(process_document(test_doc_process))  # This will extract, clean, and hash the content of the PDF
+# load_document_registry(Path("knowledge_base/document_manifest.json"))
+# print(document_registry)
+# print(check_document(test_doc_process, root))
 
-new_doc = create_document(
-    "materials/example1.pdf",
-    "as1kj2kb4kqj2b3"
-)
-print(new_doc)
+# new_doc = create_document(
+#     "materials/example1.pdf",
+#     "as1kj2kb4kqj2b3"
+# )
+# print(new_doc)
 
-
+raw_folder = Path("knowledge_base/01_raw_data")
+manifest_path = Path("knowledge_base/document_manifest.json")
+run_ingestion(raw_folder, manifest_path)

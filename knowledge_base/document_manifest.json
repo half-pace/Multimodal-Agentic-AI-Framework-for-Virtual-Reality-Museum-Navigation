@@ -1,14 +1,38 @@
 {
     "castor.pdf": {
-        "document_id": "4c283003-3ac9-4090-ba38-a2ce43aeda2f",
+        "document_id": "435e8235-5de5-4e41-b36a-16cb981e5ea6",
         "source": "castor.pdf",
         "content_hash": "057b51af30b19a104aad7fcf6b30cfd8e7c799248a44b2da92fc120b0ae938ec",
         "version": 2
     },
     "processes/Traditionalweaving_Process.pdf": {
-        "document_id": "df6b416a-5e1d-4782-a664-f3b38d5a89d3",
+        "document_id": "8703785a-7474-4726-bcea-d005c7ccac08",
         "source": "processes/Traditionalweaving_Process.pdf",
-        "content_hash": "d5b599ca746fd3ba619632560a7413ed2b8f7ee2ae70e12a5e493b8f13ee3392",
+        "content_hash": "22f32758a29cbd864b44af90ee5a43428d7320d7509f12202846735634d86c4a",
+        "version": 2
+    },
+    "artifacts/artifacts.txt": {
+        "document_id": "f50ce4ba-b375-4d56-948d-85fe45e4b7f4",
+        "source": "artifacts/artifacts.txt",
+        "content_hash": "948d74432b646fd8bbd9bfd911bce3a1f9d1493b1922f7b8a8c701cd7bf8a5d3",
+        "version": 2
+    },
+    "materials/Raw Materials of Traditional Bodo Handloom.pdf": {
+        "document_id": "a2aa5ddc-b654-412a-8776-a194b63125db",
+        "source": "materials/Raw Materials of Traditional Bodo Handloom.pdf",
+        "content_hash": "6561d72db2c052bc778a03085a49767ff9c47fc921587ef189523b7e2a0f7136",
+        "version": 1
+    },
+    "processes/Foodplants for eri silkworm.pdf": {
+        "document_id": "3c08e1ea-109c-4eff-8821-6d9b1050ca2e",
+        "source": "processes/Foodplants for eri silkworm.pdf",
+        "content_hash": "d3c231703341c828338507a4812165ae00318935fb25c29ad2e82be81abce3a4",
+        "version": 1
+    },
+    "processes/Rearing of Eri Silkworm.pdf": {
+        "document_id": "17b47a1b-aef7-4469-ba61-26580d813e38",
+        "source": "processes/Rearing of Eri Silkworm.pdf",
+        "content_hash": "7ab019ead080ad535600503072636448cbacac1611d510e63150358b3a1d97e8",
         "version": 1
     }
 }

@@ -62,32 +62,32 @@ print(chunks)
 
 #testing 2
 #using dataclass for chunking - 
-from dataclasses import dataclass, field
-import random
+# from dataclasses import dataclass, field
+# import random
 
-def generate_id():
-    id = random.randint(0, 5)
-    return id
+# def generate_id():
+#     id = random.randint(0, 5)
+#     return id
 
-@dataclass
-class Chunk:
-    text: str
-    source: str 
-    chunk_id: str = field(default_factory=generate_id)
+# @dataclass
+# class Chunk:
+#     text: str
+#     source: str 
+#     chunk_id: str = field(default_factory=generate_id)
     
-chunk1 = Chunk(
-    text = "Castor is a food plant.",
-    source = "foodplants.md"
-)
+# chunk1 = Chunk(
+#     text = "Castor is a food plant.",
+#     source = "foodplants.md"
+# )
 
-chunk2 = Chunk(
-    text = "Kesseru is another food plant.",
-    source = "foodplants.md"
-)
+# chunk2 = Chunk(
+#     text = "Kesseru is another food plant.",
+#     source = "foodplants.md"
+# )
 
-print(chunk1)
-print(chunk2)
-print(chunk1.chunk_id == chunk2.chunk_id)
+# print(chunk1)
+# print(chunk2)
+# print(chunk1.chunk_id == chunk2.chunk_id)
 #This should print False since each chunk should have a unique ID
 
 #testing 3
@@ -195,50 +195,50 @@ document_registry = {}
 #     version=1
 # )
 
-document_registry.update({document_obj.source: document_obj, document_obj1.source: document_obj1})
+#document_registry.update({document_obj.source: document_obj, document_obj1.source: document_obj1})
 
-def find_document(source: str) -> Document | None: #search document_registry using source and return corresponding Document
-    for document in document_registry.keys():
-        if source == document:
-            print(f"Document found: {document_registry[document]}")
-            return document_registry[document]
+# def find_document(source: str) -> Document | None: #search document_registry using source and return corresponding Document
+#     for document in document_registry.keys():
+#         if source == document:
+#             print(f"Document found: {document_registry[document]}")
+#             return document_registry[document]
     
-    return None
+#     return None
 
-def has_content_changed(existing_hash: str, new_hash: str) -> bool:
-    if existing_hash == new_hash:
-        #print("Content has not changed.")
-        return False
-    else:
-        #print("Content has changed.")
-        return True
+# def has_content_changed(existing_hash: str, new_hash: str) -> bool:
+#     if existing_hash == new_hash:
+#         #print("Content has not changed.")
+#         return False
+#     else:
+#         #print("Content has changed.")
+#         return True
 
 # old_hash = calculate_hash(text1)
 # new_hash_same = calculate_hash(text2)
 # new_hash_changed = calculate_hash(text3)
 
-print(has_content_changed(old_hash, new_hash_same))  # Should print "Content has not changed." and return False
-print(has_content_changed(old_hash, new_hash_changed))  # Should print "Content has changed." and return True
+# print(has_content_changed(old_hash, new_hash_same))  # Should print "Content has not changed." and return False
+# print(has_content_changed(old_hash, new_hash_changed))  # Should print "Content has changed." and return True
 
-def update_document(document: Document, changed: bool, new_hash: str) -> None:
-    """Updates the document's version and content hash if the content has changed."""
-    if changed:
-        document.version += 1
-        document.content_hash = new_hash
-        print(f"Document updated to version {document.version}.")
-    else:
-        print("No update needed; content has not changed.")
+# def update_document(document: Document, changed: bool, new_hash: str) -> None:
+#     """Updates the document's version and content hash if the content has changed."""
+#     if changed:
+#         document.version += 1
+#         document.content_hash = new_hash
+#         print(f"Document updated to version {document.version}.")
+#     else:
+#         print("No update needed; content has not changed.")
 
-print(calculate_hash(text1))
-print(document_obj)
-update_document(document_obj, has_content_changed(old_hash, new_hash_same), new_hash_same)
-update_document(document_obj, has_content_changed(old_hash, new_hash_changed), new_hash_changed)
-print(document_obj)
+# print(calculate_hash(text1))
+# print(document_obj)
+# update_document(document_obj, has_content_changed(old_hash, new_hash_same), new_hash_same)
+# update_document(document_obj, has_content_changed(old_hash, new_hash_changed), new_hash_changed)
+# print(document_obj)
 
-print(document_obj1)
-print(document_registry)
-print(find_document("castor.pdf"))
-print(find_document("eri.pdf"))
+# print(document_obj1)
+# print(document_registry)
+# print(find_document("castor.pdf"))
+# print(find_document("eri.pdf"))
 
 #testing 5 - file discovery 
 # from pathlib import Path
@@ -252,58 +252,58 @@ file = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf
 #     return relative_path.as_posix()  # Convert to POSIX-style path (with forward slashes)
 
 
-def discover_files(folder: Path):
-    discovered_files = []
-    for file in folder.rglob("*"):
-        if file.is_file():
-            print(file)
-            discovered_files.append(file)
-    return discovered_files
+# def discover_files(folder: Path):
+#     discovered_files = []
+#     for file in folder.rglob("*"):
+#         if file.is_file():
+#             print(file)
+#             discovered_files.append(file)
+#     return discovered_files
 
-def is_document_registered(source: str) -> bool:
-    return source in document_registry
+# def is_document_registered(source: str) -> bool:
+#     return source in document_registry
 
-def get_document_status(source: str) -> str:
-    return "existing" if source in document_registry else "new"
+# def get_document_status(source: str) -> str:
+#     return "existing" if source in document_registry else "new"
 
-def get_processing_status(source: str, new_hash: str) -> str:
-    if is_document_registered(source):
-        existing_document = find_document(source)
-        if existing_document:
-            if has_content_changed(existing_document.content_hash, new_hash):
-                return "changed"
-            else:
-                return "unchanged"
-    return "new"
+# def get_processing_status(source: str, new_hash: str) -> str:
+#     if is_document_registered(source):
+#         existing_document = find_document(source)
+#         if existing_document:
+#             if has_content_changed(existing_document.content_hash, new_hash):
+#                 return "changed"
+#             else:
+#                 return "unchanged"
+#     return "new"
 
-def save_document_registry(path: Path) -> None:
-    data = {}
+# def save_document_registry(path: Path) -> None:
+#     data = {}
     
-    for source, document in document_registry.items(): #convert document object into a dictionary too
-        document_data = {
-            "document_id": document.document_id,
-            "source": document.source,
-            "content_hash": document.content_hash,
-            "version": document.version
-        }
+#     for source, document in document_registry.items(): #convert document object into a dictionary too
+#         document_data = {
+#             "document_id": document.document_id,
+#             "source": document.source,
+#             "content_hash": document.content_hash,
+#             "version": document.version
+#         }
         
-        data[source] = document_data
+#         data[source] = document_data
     
-    with path.open("w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4)
+#     with path.open("w", encoding="utf-8") as f:
+#         json.dump(data, f, indent=4)
         
-def load_document_registry(path: Path) -> None: #reverse of save_document_registry - load the document registry from a JSON file
-    if path.exists():
-        with path.open("r", encoding="utf-8") as f:
-            data = json.load(f)
-            for source, document_data in data.items():
-                document_obj = Document(
-                    document_id=document_data["document_id"],
-                    source=document_data["source"],
-                    content_hash=document_data["content_hash"],
-                    version=document_data["version"]
-                )
-                document_registry[source] = document_obj
+# def load_document_registry(path: Path) -> None: #reverse of save_document_registry - load the document registry from a JSON file
+#     if path.exists():
+#         with path.open("r", encoding="utf-8") as f:
+#             data = json.load(f)
+#             for source, document_data in data.items():
+#                 document_obj = Document(
+#                     document_id=document_data["document_id"],
+#                     source=document_data["source"],
+#                     content_hash=document_data["content_hash"],
+#                     version=document_data["version"]
+#                 )
+#                 document_registry[source] = document_obj
                             
 #pipeline process 
 def process_document(path: Path) -> str:
@@ -339,9 +339,9 @@ def check_document(path: Path, root: Path) -> str:
 #     #document_registry[source] = document_obj
 #     return document_obj    
 
-def register_document(document: Document) -> None:
-    """Update the document registry with the given document. If the document already exists, update its version and hash."""
-    document_registry[document.source] = document
+# def register_document(document: Document) -> None:
+#     """Update the document registry with the given document. If the document already exists, update its version and hash."""
+#     document_registry[document.source] = document
 
 def process_discovered_files(folder: Path, root: Path) -> None:
     """Processes all discovered files in the given path, checking their status and updating the document registry accordingly."""

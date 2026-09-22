@@ -247,9 +247,9 @@ print(find_document("eri.pdf"))
 root = Path("knowledge_base/01_raw_data")
 file = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf")
 
-def get_relative_source(file: Path, root: Path): #answers - Where is this file relative to our knowledge-base root?
-    relative_path = file.relative_to(root)
-    return relative_path.as_posix()  # Convert to POSIX-style path (with forward slashes)
+# def get_relative_source(file: Path, root: Path): #answers - Where is this file relative to our knowledge-base root?
+#     relative_path = file.relative_to(root)
+#     return relative_path.as_posix()  # Convert to POSIX-style path (with forward slashes)
 
 
 def discover_files(folder: Path):

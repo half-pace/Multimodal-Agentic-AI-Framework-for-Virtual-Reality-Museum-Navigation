@@ -34,5 +34,11 @@
         "source": "processes/Rearing of Eri Silkworm.pdf",
         "content_hash": "7ab019ead080ad535600503072636448cbacac1611d510e63150358b3a1d97e8",
         "version": 1
+    },
+    "artifacts/test.txt": {
+        "document_id": "4a73e180-1406-4601-ba42-b9241bd887af",
+        "source": "artifacts/test.txt",
+        "content_hash": "0a6e3c7b2f1246548d75baf20cc4d235d1c3dd780cca6e2072584b85a4962aea",
+        "version": 2
     }
 }

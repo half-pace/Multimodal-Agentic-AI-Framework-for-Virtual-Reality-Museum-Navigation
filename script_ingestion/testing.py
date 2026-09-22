@@ -60,7 +60,8 @@
 #chunks = chunk_text(text, chunk_size=4, overlap=2)
 #print(chunks)
 
-#using dataclass for chunking - testing 2
+#testing 2
+#using dataclass for chunking - 
 # from dataclasses import dataclass, field
 # import random
 
@@ -167,32 +168,32 @@ text3 = "Castor is an important food plant."
 
 document_registry = {}
 
-@dataclass
-class Document:
-    document_id: str
-    source: str
-    content_hash: str
-    version: int
+# @dataclass
+# class Document:
+#     document_id: str
+#     source: str
+#     content_hash: str
+#     version: int
 
-def generate_document_id() -> str:
-    return str(uuid.uuid4())
+# def generate_document_id() -> str:
+#     return str(uuid.uuid4())
 
-def calculate_hash(input_string: str) -> str:
-    hashlib_object = hashlib.sha256(input_string.encode("utf-8"))
-    return hashlib_object.hexdigest()
+# def calculate_hash(input_string: str) -> str:
+#     hashlib_object = hashlib.sha256(input_string.encode("utf-8"))
+#     return hashlib_object.hexdigest()
     
-document_obj = Document(
-    document_id=generate_document_id(),
-    source="castor.pdf",
-    content_hash=calculate_hash(text1), #text1
-    version=1
-)
-document_obj1 = Document(
-    document_id=generate_document_id(),
-    source="processes/Traditionalweaving_Process.pdf",
-    content_hash=calculate_hash(text2), #text2
-    version=1
-)
+# document_obj = Document(
+#     document_id=generate_document_id(),
+#     source="castor.pdf",
+#     content_hash=calculate_hash(text1), #text1
+#     version=1
+# )
+# document_obj1 = Document(
+#     document_id=generate_document_id(),
+#     source="processes/Traditionalweaving_Process.pdf",
+#     content_hash=calculate_hash(text2), #text2
+#     version=1
+# )
 
 document_registry.update({document_obj.source: document_obj, document_obj1.source: document_obj1})
 
@@ -212,9 +213,9 @@ def has_content_changed(existing_hash: str, new_hash: str) -> bool:
         #print("Content has changed.")
         return True
 
-old_hash = calculate_hash(text1)
-new_hash_same = calculate_hash(text2)
-new_hash_changed = calculate_hash(text3)
+# old_hash = calculate_hash(text1)
+# new_hash_same = calculate_hash(text2)
+# new_hash_changed = calculate_hash(text3)
 
 print(has_content_changed(old_hash, new_hash_same))  # Should print "Content has not changed." and return False
 print(has_content_changed(old_hash, new_hash_changed))  # Should print "Content has changed." and return True
@@ -327,16 +328,16 @@ def check_document(path: Path, root: Path) -> str:
     
     return doc_status
 
-def create_document(source: str, content_hash: str) -> Document:
-    """Creates a new Document object with a unique ID and version 1 automatically and returns it."""
-    document_obj = Document(
-        document_id=generate_document_id(),
-        source=source,
-        content_hash=content_hash,
-        version=1
-    )
-    #document_registry[source] = document_obj
-    return document_obj    
+# def create_document(source: str, content_hash: str) -> Document:
+#     """Creates a new Document object with a unique ID and version 1 automatically and returns it."""
+#     document_obj = Document(
+#         document_id=generate_document_id(),
+#         source=source,
+#         content_hash=content_hash,
+#         version=1
+#     )
+#     #document_registry[source] = document_obj
+#     return document_obj    
 
 def register_document(document: Document) -> None:
     """Update the document registry with the given document. If the document already exists, update its version and hash."""

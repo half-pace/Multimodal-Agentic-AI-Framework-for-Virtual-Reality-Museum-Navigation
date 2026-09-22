@@ -404,3 +404,22 @@
 # raw_folder = Path("knowledge_base/01_raw_data")
 # manifest_path = Path("knowledge_base/document_manifest.json")
 # run_ingestion(raw_folder, manifest_path)
+
+#testing 6"""Imports"""
+from dataclasses import dataclass
+
+@dataclass
+class NormalizedDocument:
+    document_id: str #stable indentity of the document - connects the normalized document back ot the document_registry
+    source: str #where the original source came from
+    modality: str #what type of source produced this content eg - pdf, text, img etc
+    content: str # actual extracted textual representation
+    
+normalized_document = NormalizedDocument(
+    document_id="DOC-101",
+    source="processes/example.pdf",
+    modality="pdf",
+    content="Traditional Bodo handloom weaving...."
+)
+
+print(normalized_document)

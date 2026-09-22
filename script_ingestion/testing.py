@@ -1,64 +1,64 @@
-from pathlib import Path
-input_path = Path("knowledge_base/03_cleaned/materials/Raw Materials of Traditional Bodo Handloom.md")
+# from pathlib import Path
+# input_path = Path("knowledge_base/03_cleaned/materials/Raw Materials of Traditional Bodo Handloom.md")
 
-text = input_path.read_text(encoding="utf-8")
+# text = input_path.read_text(encoding="utf-8")
 
-for character in set(text):
-    if ord(character) < 32:
-        print(repr(character), ord(character))
+# for character in set(text):
+#     if ord(character) < 32:
+#         print(repr(character), ord(character))
 
-sample = "Hello\r\nWorld\rTest\nAgain"
+# sample = "Hello\r\nWorld\rTest\nAgain"
 
-print("Before: ")
-print(repr(sample))
+# print("Before: ")
+# print(repr(sample))
 
-sample = sample.replace("\r\n", "\n")
-sample = sample.replace("\r", "\n")
+# sample = sample.replace("\r\n", "\n")
+# sample = sample.replace("\r", "\n")
 
-print("After: ")
-print(repr(sample))
+# print("After: ")
+# print(repr(sample))
 
-def validate_cleaned_text(text: str) -> bool:
-    return bool(text.strip())
+# def validate_cleaned_text(text: str) -> bool:
+#     return bool(text.strip())
 
 
-print(validate_cleaned_text("Hello world"))
-print(validate_cleaned_text(""))
-print(validate_cleaned_text("     "))
-print(validate_cleaned_text("\n\n"))
-print(validate_cleaned_text("Castor\nRicinus communis"))
+# print(validate_cleaned_text("Hello world"))
+# print(validate_cleaned_text(""))
+# print(validate_cleaned_text("     "))
+# print(validate_cleaned_text("\n\n"))
+# print(validate_cleaned_text("Castor\nRicinus communis"))
 
-#chunking testing 1
-#we will use raise to raise and error deliberately - we will use ValueError
+# #chunking testing 1
+# #we will use raise to raise and error deliberately - we will use ValueError
 
-text = "abcdefghij"
-def chunk_text(text: str, chunk_size: int, overlap: int) -> list[str]:
-    if chunk_size <= 0:
-        raise ValueError("Chunk size must be greater than 0")
-    elif overlap >= chunk_size:
-        raise ValueError("Overlap must be less than chunk size")
-    elif overlap < 0:
-        raise ValueError("Overlap must be greater than or equal to 0")
+# text = "abcdefghij"
+# def chunk_text(text: str, chunk_size: int, overlap: int) -> list[str]:
+#     if chunk_size <= 0:
+#         raise ValueError("Chunk size must be greater than 0")
+#     elif overlap >= chunk_size:
+#         raise ValueError("Overlap must be less than chunk size")
+#     elif overlap < 0:
+#         raise ValueError("Overlap must be greater than or equal to 0")
 
-    chunked = []
-    start = 0
-    step = chunk_size - overlap
-    while start < len(text):
-        chunk = text[start:start + chunk_size]
-        chunked.append(chunk)
-        start += step
-    return chunked
+#     chunked = []
+#     start = 0
+#     step = chunk_size - overlap
+#     while start < len(text):
+#         chunk = text[start:start + chunk_size]
+#         chunked.append(chunk)
+#         start += step
+#     return chunked
     
-try:
-    chunks = chunk_text(text, chunk_size=4, overlap=2)
-    print(chunks)
-    #chunk_text(text, chunk_size=4, overlap=-1)
-    #chunk_text(text, chunk_size=4, overlap=4)
-    #chunk_text(text, chunk_size=4, overlap=5)
-except ValueError as e:
-    print(f"Error: {e}")    
-chunks = chunk_text(text, chunk_size=4, overlap=2)
-print(chunks)
+# try:
+#     chunks = chunk_text(text, chunk_size=4, overlap=2)
+#     print(chunks)
+#     #chunk_text(text, chunk_size=4, overlap=-1)
+#     #chunk_text(text, chunk_size=4, overlap=4)
+#     #chunk_text(text, chunk_size=4, overlap=5)
+# except ValueError as e:
+#     print(f"Error: {e}")    
+# chunks = chunk_text(text, chunk_size=4, overlap=2)
+# print(chunks)
 
 #testing 2
 #using dataclass for chunking - 
@@ -154,19 +154,19 @@ print(chunks)
 #     print(f"Error: {e}")
 
 #testing 4
-from dataclasses import dataclass
-from pathlib import Path
-import hashlib, uuid, json
-from extraction import *
-from cleaning import *
+# from dataclasses import dataclass
+# from pathlib import Path
+# import hashlib, uuid, json
+# from extraction import *
+# from cleaning import *
 
-# print(hashlib.sha256(b"Hello world").hexdigest())
+# # print(hashlib.sha256(b"Hello world").hexdigest())
 
-text1 = "Castor is a food plant."
-text2 = "Castor is a food plant."
-text3 = "Castor is an important food plant."
+# text1 = "Castor is a food plant."
+# text2 = "Castor is a food plant."
+# text3 = "Castor is an important food plant."
 
-document_registry = {}
+# document_registry = {}
 
 # @dataclass
 # class Document:
@@ -244,8 +244,8 @@ document_registry = {}
 # from pathlib import Path
 # import json
 
-root = Path("knowledge_base/01_raw_data")
-file = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf")
+# root = Path("knowledge_base/01_raw_data")
+# file = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf")
 
 # def get_relative_source(file: Path, root: Path): #answers - Where is this file relative to our knowledge-base root?
 #     relative_path = file.relative_to(root)
@@ -306,27 +306,27 @@ file = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf
 #                 document_registry[source] = document_obj
                             
 #pipeline process 
-def process_document(path: Path) -> str:
+# def process_document(path: Path) -> str:
     
-    if path.suffix == ".pdf":
-        extracted_file = extract_pdf_text(path)
-        cleaned_file = normalize_whitespace(extracted_file)
-        content_hash = calculate_hash(cleaned_file)
-        return content_hash
-    elif path.suffix == ".txt":
-        cleaned_file = normalize_whitespace(path.read_text(encoding="utf-8"))
-        content_hash = calculate_hash(cleaned_file)
-        return content_hash
-    else:
-        raise ValueError(f"Unsupported file type: {path.suffix}")
+#     if path.suffix == ".pdf":
+#         extracted_file = extract_pdf_text(path)
+#         cleaned_file = normalize_whitespace(extracted_file)
+#         content_hash = calculate_hash(cleaned_file)
+#         return content_hash
+#     elif path.suffix == ".txt":
+#         cleaned_file = normalize_whitespace(path.read_text(encoding="utf-8"))
+#         content_hash = calculate_hash(cleaned_file)
+#         return content_hash
+#     else:
+#         raise ValueError(f"Unsupported file type: {path.suffix}")
 
-def check_document(path: Path, root: Path) -> str:
-    """Returns the status of the document"""
-    relative_source = get_relative_source(path, root)
-    received_hash = process_document(path)
-    doc_status = get_processing_status(relative_source, received_hash)
+# def check_document(path: Path, root: Path) -> str:
+#     """Returns the status of the document"""
+#     relative_source = get_relative_source(path, root)
+#     received_hash = process_document(path)
+#     doc_status = get_processing_status(relative_source, received_hash)
     
-    return doc_status
+#     return doc_status
 
 # def create_document(source: str, content_hash: str) -> Document:
 #     """Creates a new Document object with a unique ID and version 1 automatically and returns it."""
@@ -343,35 +343,35 @@ def check_document(path: Path, root: Path) -> str:
 #     """Update the document registry with the given document. If the document already exists, update its version and hash."""
 #     document_registry[document.source] = document
 
-def process_discovered_files(folder: Path, root: Path) -> None:
-    """Processes all discovered files in the given path, checking their status and updating the document registry accordingly."""
-    discovered_files = discover_files(folder)
-    for file in discovered_files:
-        relative_source = get_relative_source(file, root)
-        received_hash = process_document(file)
-        doc_status = get_processing_status(relative_source, received_hash)
+# def process_discovered_files(folder: Path, root: Path) -> None:
+#     """Processes all discovered files in the given path, checking their status and updating the document registry accordingly."""
+#     discovered_files = discover_files(folder)
+#     for file in discovered_files:
+#         relative_source = get_relative_source(file, root)
+#         received_hash = process_document(file)
+#         doc_status = get_processing_status(relative_source, received_hash)
         
-        if doc_status == "new":
-            new_doc = create_document(relative_source, received_hash)
-            register_document(new_doc)
-            print(f"Registered new document: {new_doc}")
-        elif doc_status == "changed":
-            existing_doc = find_document(relative_source)
-            if existing_doc:
-                update_document(existing_doc, True, received_hash)
-                print(f"Updated existing document: {existing_doc}")
-        else:
-            print(f"No changes detected for document: {relative_source}")       
+#         if doc_status == "new":
+#             new_doc = create_document(relative_source, received_hash)
+#             register_document(new_doc)
+#             print(f"Registered new document: {new_doc}")
+#         elif doc_status == "changed":
+#             existing_doc = find_document(relative_source)
+#             if existing_doc:
+#                 update_document(existing_doc, True, received_hash)
+#                 print(f"Updated existing document: {existing_doc}")
+#         else:
+#             print(f"No changes detected for document: {relative_source}")       
 
-def run_ingestion(raw_folder: Path, manifest_path: Path) -> None:
-    """Runs the ingestion pipeline by loading the registry,
-    processing discovered files, and saving the updated registry."""
-    load_document_registry(manifest_path)
-    # print("Registry after loading: ")
-    # print(document_registry)
+# def run_ingestion(raw_folder: Path, manifest_path: Path) -> None:
+#     """Runs the ingestion pipeline by loading the registry,
+#     processing discovered files, and saving the updated registry."""
+#     load_document_registry(manifest_path)
+#     # print("Registry after loading: ")
+#     # print(document_registry)
     
-    process_discovered_files(raw_folder, raw_folder)
-    save_document_registry(manifest_path)   
+#     process_discovered_files(raw_folder, raw_folder)
+#     save_document_registry(manifest_path)   
     
     
     
@@ -401,7 +401,6 @@ def run_ingestion(raw_folder: Path, manifest_path: Path) -> None:
 #     "as1kj2kb4kqj2b3"
 # )
 # print(new_doc)
-
-raw_folder = Path("knowledge_base/01_raw_data")
-manifest_path = Path("knowledge_base/document_manifest.json")
-run_ingestion(raw_folder, manifest_path)
+# raw_folder = Path("knowledge_base/01_raw_data")
+# manifest_path = Path("knowledge_base/document_manifest.json")
+# run_ingestion(raw_folder, manifest_path)

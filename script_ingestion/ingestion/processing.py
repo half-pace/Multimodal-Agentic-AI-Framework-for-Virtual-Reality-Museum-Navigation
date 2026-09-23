@@ -12,22 +12,35 @@ from ingestion.manifest import (
     save_document_registry,
     update_document,
 )
+from knowledge.normalized import NormalizedDocument
 
 
 """Functions"""
 
-def process_document(path: Path) -> str:
-    """Processes document and returns their content_hash"""
+def process_document(path: Path) -> NormalizedDocument:
+    """Extracts and normalize a document into a NormalizedDocument #content_hash"""
     if path.suffix == ".pdf":
         extracted_file = extract_pdf_text(path)
         cleaned_file = normalize_whitespace(extracted_file)
-        return calculate_hash(cleaned_file)
+        normalized_document = NormalizedDocument(
+            document_id="DOC102",
+            source=path.as_posix(),
+            modality="pdf",
+            content=cleaned_file
+        )
+        return normalized_document #calculate_hash(cleaned_file)
     
     elif path.suffix == ".txt":
         cleaned_file = normalize_whitespace(
             path.read_text(encoding="utf-8")
         )
-        return calculate_hash(cleaned_file)
+        normalized_document = NormalizedDocument(
+            document_id="DOC101",
+            source=path.as_posix(),
+            modality="txt",
+            content=cleaned_file
+        )
+        return normalized_document #calculate_hash(cleaned_file)
     
     else:
         raise ValueError(f"Unsupported file type: {path.suffix}")

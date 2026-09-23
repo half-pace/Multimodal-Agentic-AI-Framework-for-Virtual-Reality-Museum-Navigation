@@ -17,7 +17,7 @@ def generate_document_id() -> str:
     return str(uuid.uuid4())
 
 def calculate_hash(input_string: str) -> str:
-    """Calculates the SHA-256 hash of the input string."""
+    """Calculates the SHA-256 hash of the input string. Detects content changes"""
     hashlib_object = hashlib.sha256(input_string.encode("utf-8"))
     return hashlib_object.hexdigest()
 

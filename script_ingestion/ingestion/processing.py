@@ -23,7 +23,7 @@ def process_document(path: Path) -> NormalizedDocument:
         extracted_file = extract_pdf_text(path)
         cleaned_file = normalize_whitespace(extracted_file)
         normalized_document = NormalizedDocument(
-            document_id="DOC102",
+            document_id=None,
             source=path.as_posix(),
             modality="pdf",
             content=cleaned_file
@@ -35,7 +35,7 @@ def process_document(path: Path) -> NormalizedDocument:
             path.read_text(encoding="utf-8")
         )
         normalized_document = NormalizedDocument(
-            document_id="DOC101",
+            document_id=None,
             source=path.as_posix(),
             modality="txt",
             content=cleaned_file
@@ -68,12 +68,14 @@ def process_discovered_files(folder: Path, root: Path) -> None:
         if doc_status == "new":
             new_doc = create_document(relative_source, received_hash)
             register_document(new_doc)
+            normalized_document.document_id = new_doc.document_id
             print(f"Registered new document: {new_doc}")
             
         elif doc_status == "changed":
             existing_doc = find_document(relative_source)
             
             if existing_doc:
+                normalized_document.document_id = existing_doc.document_id
                 update_document(existing_doc, received_hash)
                 print(f"Updated existing document: {existing_doc}")
         

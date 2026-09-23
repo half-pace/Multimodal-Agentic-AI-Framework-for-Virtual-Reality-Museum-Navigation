@@ -48,8 +48,9 @@ def process_document(path: Path) -> NormalizedDocument:
 
 def check_document(path: Path, root: Path) -> str:
     """Returns the status of the document"""
+    normalized_document = process_document(path)
     relative_source = get_relative_source(path, root)
-    received_hash = process_document(path)
+    received_hash = calculate_hash(normalized_document.content) #process_document(path)
     
     return get_processing_status(relative_source, received_hash)
 
@@ -58,8 +59,9 @@ def process_discovered_files(folder: Path, root: Path) -> None:
     discovered_files = discover_files(folder)
     
     for file in discovered_files:
+        normalized_document = process_document(file)
         relative_source = get_relative_source(file, root)
-        received_hash = process_document(file)
+        received_hash = calculate_hash(normalized_document.content)
         
         doc_status = get_processing_status(relative_source, received_hash)
         

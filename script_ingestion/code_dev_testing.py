@@ -407,8 +407,8 @@
 
 #testing 6"""Imports"""
 from dataclasses import dataclass, field
-
-
+from ingestion.processing import extract_content
+from pathlib import Path
 
 @dataclass
 class DocumentSection:
@@ -447,6 +447,9 @@ normalized_document = NormalizedDocument(
     ]
 )
 
-print(normalized_document)
+#print(normalized_document)
 # print(document_section)
 # print(document_section1)
+
+raw_content = extract_content(Path("knowledge_base/01_raw_data/processes/Foodplants for eri silkworm.pdf"))
+print(raw_content)

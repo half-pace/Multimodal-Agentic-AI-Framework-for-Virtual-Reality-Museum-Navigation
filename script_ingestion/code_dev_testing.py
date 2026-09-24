@@ -407,49 +407,60 @@
 
 #testing 6"""Imports"""
 from dataclasses import dataclass, field
-from ingestion.processing import extract_content
+from ingestion.processing import extract_content, process_document
 from pathlib import Path
 
-@dataclass
-class DocumentSection:
-    title: str | None
-    content: str
-@dataclass
-class NormalizedDocument:
-    document_id: str #stable indentity of the document - connects the normalized document back ot the document_registry
-    source: str #where the original source came from
-    modality: str #what type of source produced this content eg - pdf, text, img etc
-    sections: list[DocumentSection] = field(default_factory=list)  # actual extracted textual representation
+path = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf")
 
-document_section = DocumentSection(
-    title="Traditional Weaving",
-    content="Process begins with..."
-)
+# @dataclass
+# class DocumentSection:
+#     title: str | None
+#     content: str
+# @dataclass
+# class NormalizedDocument:
+#     document_id: str #stable indentity of the document - connects the normalized document back ot the document_registry
+#     source: str #where the original source came from
+#     modality: str #what type of source produced this content eg - pdf, text, img etc
+#     sections: list[DocumentSection] = field(default_factory=list)  # actual extracted textual representation
 
-document_section1 = DocumentSection(
-    title=None,
-    content="Document without title...."
-)
+# document_section = DocumentSection(
+#     title="Traditional Weaving",
+#     content="Process begins with..."
+# )
+
+# document_section1 = DocumentSection(
+#     title=None,
+#     content="Document without title...."
+# )
     
-normalized_document = NormalizedDocument(
-    document_id=None,
-    source="processes/example.pdf",
-    modality="pdf",
-    sections=[
-        DocumentSection(
-            title=None,
-            content="Process begins with...."
-        ),
-        DocumentSection(
-            title="Traditional Weaving",
-            content="2nd process starts with...."
-        )
-    ]
-)
+# normalized_document = NormalizedDocument(
+#     document_id=None,
+#     source="processes/example.pdf",
+#     modality="pdf",
+#     sections=[
+#         DocumentSection(
+#             title=None,
+#             content="Process begins with...."
+#         ),
+#         DocumentSection(
+#             title="Traditional Weaving",
+#             content="2nd process starts with...."
+#         )
+#     ]
+# )
 
 #print(normalized_document)
 # print(document_section)
 # print(document_section1)
 
-raw_content = extract_content(Path("knowledge_base/01_raw_data/processes/Foodplants for eri silkworm.pdf"))
-print(raw_content)
+# raw_content = extract_content(Path("knowledge_base/01_raw_data/processes/Foodplants for eri silkworm.pdf"))
+# print(raw_content)
+normalized_document = process_document(
+    path,
+    "processes/Traditionalweaving_Process.pdf"
+)
+
+for section in normalized_document.sections:
+    print(section.title)
+    print(section.content[:200])
+    print("-" * 50)

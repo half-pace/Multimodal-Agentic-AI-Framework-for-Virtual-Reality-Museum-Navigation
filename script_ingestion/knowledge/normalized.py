@@ -1,5 +1,6 @@
 """Imports"""
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from knowledge.section import DocumentSection
 
 
 """Represents normalized knowledge"""
@@ -8,4 +9,5 @@ class NormalizedDocument:
     document_id: str | None #stable indentity of the document - connects the normalized document back ot the document_registry. str | None because 
     source: str #where the original source came from
     modality: str #what type of source produced this content eg - pdf, text, img etc
-    content: str # actual extracted textual representation
+    #content: str # actual extracted textual representation
+    sections: list[DocumentSection] = field(default_factory = list) #list of extracted sections

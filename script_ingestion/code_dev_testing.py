@@ -406,20 +406,47 @@
 # run_ingestion(raw_folder, manifest_path)
 
 #testing 6"""Imports"""
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
+
+
+@dataclass
+class DocumentSection:
+    title: str | None
+    content: str
 @dataclass
 class NormalizedDocument:
     document_id: str #stable indentity of the document - connects the normalized document back ot the document_registry
     source: str #where the original source came from
     modality: str #what type of source produced this content eg - pdf, text, img etc
-    content: str # actual extracted textual representation
+    sections: list[DocumentSection] = field(default_factory=list)  # actual extracted textual representation
+
+document_section = DocumentSection(
+    title="Traditional Weaving",
+    content="Process begins with..."
+)
+
+document_section1 = DocumentSection(
+    title=None,
+    content="Document without title...."
+)
     
 normalized_document = NormalizedDocument(
-    document_id="DOC-101",
+    document_id=None,
     source="processes/example.pdf",
     modality="pdf",
-    content="Traditional Bodo handloom weaving...."
+    sections=[
+        DocumentSection(
+            title=None,
+            content="Process begins with...."
+        ),
+        DocumentSection(
+            title="Traditional Weaving",
+            content="2nd process starts with...."
+        )
+    ]
 )
 
 print(normalized_document)
+# print(document_section)
+# print(document_section1)

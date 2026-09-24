@@ -2,31 +2,31 @@
     "artifacts/artifacts.txt": {
         "document_id": "40b8690b-2d34-432f-872e-02eaa777b39f",
         "source": "artifacts/artifacts.txt",
-        "content_hash": "596e49410b10277133153de406f4668e5b5c0ead019035a677e63206c2601481",
-        "version": 2
+        "content_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": 3
     },
     "materials/Raw Materials of Traditional Bodo Handloom.pdf": {
         "document_id": "5030fc55-8485-4862-8b4c-838398bfb834",
         "source": "materials/Raw Materials of Traditional Bodo Handloom.pdf",
-        "content_hash": "6561d72db2c052bc778a03085a49767ff9c47fc921587ef189523b7e2a0f7136",
-        "version": 1
+        "content_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": 2
     },
     "processes/Foodplants for eri silkworm.pdf": {
         "document_id": "a43da69f-f99e-4cf7-9d93-9017351ebf7c",
         "source": "processes/Foodplants for eri silkworm.pdf",
-        "content_hash": "d3c231703341c828338507a4812165ae00318935fb25c29ad2e82be81abce3a4",
-        "version": 1
+        "content_hash": "6d5157c3bf7d5a5d4ca3eae29cbb6e0d6b445ff5b5cace22203c31d17b32190b",
+        "version": 2
     },
     "processes/Rearing of Eri Silkworm.pdf": {
         "document_id": "eaa8f03c-f13c-4c80-abfb-2015216d927c",
         "source": "processes/Rearing of Eri Silkworm.pdf",
-        "content_hash": "7ab019ead080ad535600503072636448cbacac1611d510e63150358b3a1d97e8",
-        "version": 1
+        "content_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": 2
     },
     "processes/Traditionalweaving_Process.pdf": {
         "document_id": "8652f0b1-d4d3-4e98-9483-69faa013f739",
         "source": "processes/Traditionalweaving_Process.pdf",
-        "content_hash": "22f32758a29cbd864b44af90ee5a43428d7320d7509f12202846735634d86c4a",
-        "version": 1
+        "content_hash": "25a0682e62c461189952669a9d6f5d11b23928d13e445360d731ab6fa2292dd0",
+        "version": 2
     }
 }

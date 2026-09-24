@@ -19,32 +19,25 @@ from knowledge.normalized import NormalizedDocument
 
 def process_document(path: Path, source: str) -> NormalizedDocument:
     """Extracts and normalize a document into a NormalizedDocument #content_hash"""
+    raw_content = extract_content(path)
+    cleaned_content = normalize_whitespace(raw_content)
+    
+    return NormalizedDocument (
+        document_id=None,
+        source=source,
+        modality=path.suffix.lstrip("."),
+        content=cleaned_content
+    )
+    
+def extract_content(path: Path) -> str:
+    """Responsible to get textual content from the source"""
     if path.suffix == ".pdf":
-        extracted_file = extract_pdf_text(path)
-        cleaned_file = normalize_whitespace(extracted_file)
-        normalized_document = NormalizedDocument(
-            document_id=None,
-            source=source,
-            modality="pdf",
-            content=cleaned_file
-        )
-        return normalized_document #calculate_hash(cleaned_file)
-    
+        return extract_pdf_text(path)
     elif path.suffix == ".txt":
-        cleaned_file = normalize_whitespace(
-            path.read_text(encoding="utf-8")
-        )
-        normalized_document = NormalizedDocument(
-            document_id=None,
-            source=source,
-            modality="txt",
-            content=cleaned_file
-        )
-        return normalized_document #calculate_hash(cleaned_file)
-    
+        return path.read_text(encoding="utf-8")
     else:
         raise ValueError(f"Unsupported file type: {path.suffix}")
-    
+
 
 def check_document(path: Path, root: Path) -> str:
     """Returns the status of the document"""

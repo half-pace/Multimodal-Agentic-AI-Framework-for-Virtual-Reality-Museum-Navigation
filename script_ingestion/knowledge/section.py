@@ -19,7 +19,7 @@ def get_section_text(sections: list[DocumentSection]) -> str:
     """Combines all section contents into 1 string"""
     return "\n".join(section.content for section in sections)
         
-text = "Hello world"
+# text = "Hello world"
 
-sections = create_sections(text)
-print(get_section_text(sections))
+# sections = create_sections(text)
+# print(get_section_text(sections))

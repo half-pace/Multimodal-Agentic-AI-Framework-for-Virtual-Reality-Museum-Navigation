@@ -10,11 +10,36 @@ class DocumentSection:
 
 def create_sections(text: str) -> list[DocumentSection]:
     """Creates sections from cleaned texts"""
+    current_title = None
+    sections = []
+    current_content = []
     
-    return [DocumentSection(
-        title=None,
-        content=text
-    )]
+    for line in text.splitlines():
+        if is_section_heading(line):
+            title = re.sub(r"^\d+\.\s+", "", line)
+            
+            if current_title is not None:
+                sections.append(
+                    DocumentSection(
+                        title=current_title,
+                        content="\n".join(current_content).strip()
+                    )
+                )
+            
+            current_title = title
+            current_content = []
+        else:
+            current_content.append(line)
+            
+    if current_title is not None:
+        sections.append(
+            DocumentSection(
+                title=current_title,
+                content="\n".join(current_content).strip()
+            )
+        )
+    
+    return sections
 
 def get_section_text(sections: list[DocumentSection]) -> str:
     """Combines all section contents into 1 string"""
@@ -24,11 +49,21 @@ def get_section_text(sections: list[DocumentSection]) -> str:
 def is_section_heading(line: str) -> bool:
     return bool(re.match(r"^\d+\.\s+.+$", line))
         
-# text = "Hello world"
-# sections = create_sections(text)
-# print(get_section_text(sections))
-print(is_section_heading("1. Ginning"))
-print(is_section_heading("2. Spinning"))
-print(is_section_heading("10. Something"))
-print(is_section_heading("The 1. process begins"))
-print(is_section_heading("some normal paragraph"))
+text = """Traditional Weaving
+
+1. Ginning
+Ginning is the first process.
+It's important
+
+2. Spinning
+Spinning prepares the yarn.
+
+3. Reeling
+Reeling is another process.
+"""
+
+sections = create_sections(text)
+
+for section in sections:
+    print(section)
+

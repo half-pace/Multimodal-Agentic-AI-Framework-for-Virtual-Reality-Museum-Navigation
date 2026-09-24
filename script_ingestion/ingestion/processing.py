@@ -17,14 +17,14 @@ from knowledge.normalized import NormalizedDocument
 
 """Functions"""
 
-def process_document(path: Path) -> NormalizedDocument:
+def process_document(path: Path, source: str) -> NormalizedDocument:
     """Extracts and normalize a document into a NormalizedDocument #content_hash"""
     if path.suffix == ".pdf":
         extracted_file = extract_pdf_text(path)
         cleaned_file = normalize_whitespace(extracted_file)
         normalized_document = NormalizedDocument(
             document_id=None,
-            source=path.as_posix(),
+            source=source,
             modality="pdf",
             content=cleaned_file
         )
@@ -36,7 +36,7 @@ def process_document(path: Path) -> NormalizedDocument:
         )
         normalized_document = NormalizedDocument(
             document_id=None,
-            source=path.as_posix(),
+            source=source,
             modality="txt",
             content=cleaned_file
         )
@@ -48,7 +48,7 @@ def process_document(path: Path) -> NormalizedDocument:
 
 def check_document(path: Path, root: Path) -> str:
     """Returns the status of the document"""
-    normalized_document = process_document(path)
+    normalized_document = process_document(path, relative_source)
     relative_source = get_relative_source(path, root)
     received_hash = calculate_hash(normalized_document.content) #process_document(path)
     
@@ -59,8 +59,8 @@ def process_discovered_files(folder: Path, root: Path) -> None:
     discovered_files = discover_files(folder)
     
     for file in discovered_files:
-        normalized_document = process_document(file)
         relative_source = get_relative_source(file, root)
+        normalized_document = process_document(file, relative_source)
         received_hash = calculate_hash(normalized_document.content)
         
         doc_status = get_processing_status(relative_source, received_hash)

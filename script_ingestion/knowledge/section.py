@@ -15,7 +15,11 @@ def create_sections(text: str) -> list[DocumentSection]:
         content=text
     )]
 
-text = "Traditional weaving begins with preparation of the yarn."
+def get_section_text(sections: list[DocumentSection]) -> str:
+    """Combines all section contents into 1 string"""
+    return "\n".join(section.content for section in sections)
+        
+text = "Hello world"
 
 sections = create_sections(text)
-print(sections)
+print(get_section_text(sections))

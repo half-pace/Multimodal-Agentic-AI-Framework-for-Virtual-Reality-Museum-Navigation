@@ -13,6 +13,7 @@ from ingestion.manifest import (
     update_document,
 )
 from knowledge.normalized import NormalizedDocument
+from knowledge.section import create_sections, get_section_text
 
 
 """Functions"""
@@ -26,7 +27,7 @@ def process_document(path: Path, source: str) -> NormalizedDocument:
         document_id=None,
         source=source,
         modality=path.suffix.lstrip("."),
-        content=cleaned_content
+        sections=create_sections(cleaned_content)
     )
     
 def extract_content(path: Path) -> str:
@@ -54,7 +55,7 @@ def process_discovered_files(folder: Path, root: Path) -> None:
     for file in discovered_files:
         relative_source = get_relative_source(file, root)
         normalized_document = process_document(file, relative_source)
-        received_hash = calculate_hash(normalized_document.content)
+        received_hash = calculate_hash(get_section_text(normalized_document.sections))
         
         doc_status = get_processing_status(relative_source, received_hash)
         

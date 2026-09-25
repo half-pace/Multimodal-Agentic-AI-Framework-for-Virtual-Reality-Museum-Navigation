@@ -1,22 +1,22 @@
 ---
-        type: Process
-        title: Spinning
-        description: Traditional pre-weaving process in Bodo handloom preparation.
-        tags:
-          - Bodo
-          - handloom
-          - weaving
-          - cotton
-        status: draft
-        sources:
-          - id: traditional-weaving-process
-            resource: ../../01_raw_data/processes/Traditionalweaving_Process.pdf
-            title: Traditional Weaving Process of the Bodos
-        ---
-
-        # Spinning
-
-        After sizing, the boiled thread fitted on a danganatha (big size reel) for dried.
+type: Process
+title: Spinning
+description: Traditional pre-weaving process in Bodo handloom preparation.
+tags:
+  - Bodo
+  - handloom
+  - weaving
+  - cotton
+status: draft
+sources:
+  - id: traditional-weaving-process
+resource: ../../01_raw_data/processes/Traditionalweaving_Process.pdf
+title: Traditional Weaving Process of the Bodos
+---
+        
+# Spinning
+        
+After sizing, the boiled thread fitted on a danganatha (big size reel) for dried.
 The skein of thread wound at a stretch and then removed from the reel. The
 skeins of thread then spread on one pair of gonsi (flat long split bamboo) and
 let dry in the sunshine. When the threads are dry, these fitted on chwrkhi (small

@@ -1,22 +1,22 @@
 ---
-        type: Process
-        title: Reeling
-        description: Traditional pre-weaving process in Bodo handloom preparation.
-        tags:
-          - Bodo
-          - handloom
-          - weaving
-          - cotton
-        status: draft
-        sources:
-          - id: traditional-weaving-process
-            resource: ../../01_raw_data/processes/Traditionalweaving_Process.pdf
-            title: Traditional Weaving Process of the Bodos
-        ---
-
-        # Reeling
-
-        Among the Bodos both rearing and reeling operations are traditional
+type: Process
+title: Reeling
+description: Traditional pre-weaving process in Bodo handloom preparation.
+tags:
+  - Bodo
+  - handloom
+  - weaving
+  - cotton
+status: draft
+sources:
+  - id: traditional-weaving-process
+resource: ../../01_raw_data/processes/Traditionalweaving_Process.pdf
+title: Traditional Weaving Process of the Bodos
+---
+        
+# Reeling
+        
+Among the Bodos both rearing and reeling operations are traditional
 techniques. The reeling has mostly done on the mulberry cocoons. Firstly, the
 cocoons boiled in a vessel with water by fire or softened by steam. Number of
 selected cocoons are kept floating on the surface of water. After over the

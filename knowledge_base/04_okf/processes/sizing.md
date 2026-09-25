@@ -1,22 +1,22 @@
 ---
-        type: Process
-        title: Sizing
-        description: Traditional pre-weaving process in Bodo handloom preparation.
-        tags:
-          - Bodo
-          - handloom
-          - weaving
-          - cotton
-        status: draft
-        sources:
-          - id: traditional-weaving-process
-            resource: ../../01_raw_data/processes/Traditionalweaving_Process.pdf
-            title: Traditional Weaving Process of the Bodos
-        ---
-
-        # Sizing
-
-        The sizing is a pre weaving process, which is unique technique of handloom
+type: Process
+title: Sizing
+description: Traditional pre-weaving process in Bodo handloom preparation.
+tags:
+  - Bodo
+  - handloom
+  - weaving
+  - cotton
+status: draft
+sources:
+  - id: traditional-weaving-process
+resource: ../../01_raw_data/processes/Traditionalweaving_Process.pdf
+title: Traditional Weaving Process of the Bodos
+---
+        
+# Sizing
+        
+The sizing is a pre weaving process, which is unique technique of handloom
 weaving. Sizing is a coating of lubricate mixture of natural ingredients
 containing like – rice powder, maize, wheat flour etc. which is overlap on the
 surfaces of the yarn and it makes the yarn strength, rounder in shape and

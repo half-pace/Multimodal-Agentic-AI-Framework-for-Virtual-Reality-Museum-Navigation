@@ -1,22 +1,22 @@
 ---
-        type: Process
-        title: Ginning
-        description: Traditional pre-weaving process in Bodo handloom preparation.
-        tags:
-          - Bodo
-          - handloom
-          - weaving
-          - cotton
-        status: draft
-        sources:
-          - id: traditional-weaving-process
-            resource: ../../01_raw_data/processes/Traditionalweaving_Process.pdf
-            title: Traditional Weaving Process of the Bodos
-        ---
-
-        # Ginning
-
-        The ginning is first pre weaving process that the cottons seed are dried and
+type: Process
+title: Ginning
+description: Traditional pre-weaving process in Bodo handloom preparation.
+tags:
+  - Bodo
+  - handloom
+  - weaving
+  - cotton
+status: draft
+sources:
+  - id: traditional-weaving-process
+resource: ../../01_raw_data/processes/Traditionalweaving_Process.pdf
+title: Traditional Weaving Process of the Bodos
+---
+        
+# Ginning
+        
+The ginning is first pre weaving process that the cottons seed are dried and
 cleaning off by using a wooden device after collection from the plant. It is
 known as Neotha hwnai among the Bodos. In this process, consists of two
 vertical wooden posts and fixed to a flat piece of wood. Then two wooden

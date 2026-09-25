@@ -11,27 +11,27 @@ def create_slug(title: str) -> str:
     return new_title.lower().strip("-")
 
 def create_okf_content(section: DocumentSection, source: str) -> str:
-    return textwrap.dedent(f""" 
-        ---
-        type: Process
-        title: {section.title}
-        description: Traditional pre-weaving process in Bodo handloom preparation.
-        tags:
-          - Bodo
-          - handloom
-          - weaving
-          - cotton
-        status: draft
-        sources:
-          - id: traditional-weaving-process
-            resource: ../../01_raw_data/{source}
-            title: Traditional Weaving Process of the Bodos
-        ---
+    #textwrap.dedent().strip() removes indentation
+    return f"""---
+type: Process
+title: {section.title}
+description: Traditional pre-weaving process in Bodo handloom preparation.
+tags:
+  - Bodo
+  - handloom
+  - weaving
+  - cotton
+status: draft
+sources:
+  - id: traditional-weaving-process
+resource: ../../01_raw_data/{source}
+title: Traditional Weaving Process of the Bodos
+---
         
-        # {section.title}
+# {section.title}
         
-        {section.content}
-    """).strip()
+{section.content}
+""".strip()
     
     
 def write_okf_file(content: str, output_path: Path) -> None:

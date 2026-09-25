@@ -1,22 +1,22 @@
 ---
-        type: Process
-        title: Weaving
-        description: Traditional pre-weaving process in Bodo handloom preparation.
-        tags:
-          - Bodo
-          - handloom
-          - weaving
-          - cotton
-        status: draft
-        sources:
-          - id: traditional-weaving-process
-            resource: ../../01_raw_data/processes/Traditionalweaving_Process.pdf
-            title: Traditional Weaving Process of the Bodos
-        ---
-
-        # Weaving
-
-        The weaving has started after sizing, spinning, warping, denting, beaming and
+type: Process
+title: Weaving
+description: Traditional pre-weaving process in Bodo handloom preparation.
+tags:
+  - Bodo
+  - handloom
+  - weaving
+  - cotton
+status: draft
+sources:
+  - id: traditional-weaving-process
+resource: ../../01_raw_data/processes/Traditionalweaving_Process.pdf
+title: Traditional Weaving Process of the Bodos
+---
+        
+# Weaving
+        
+The weaving has started after sizing, spinning, warping, denting, beaming and
 drafting or heald knitting. Nevertheless, there is some traditional process of
 preparing the yarn for the convenient of weaving. Generally, the Bodo women
 have folk used “Sal” (throw shuttle loom) and “Thati sal” or “Tat sal”

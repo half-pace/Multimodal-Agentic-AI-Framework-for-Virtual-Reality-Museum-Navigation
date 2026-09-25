@@ -1,22 +1,22 @@
 ---
-        type: Process
-        title: Looming
-        description: Traditional pre-weaving process in Bodo handloom preparation.
-        tags:
-          - Bodo
-          - handloom
-          - weaving
-          - cotton
-        status: draft
-        sources:
-          - id: traditional-weaving-process
-            resource: ../../01_raw_data/processes/Traditionalweaving_Process.pdf
-            title: Traditional Weaving Process of the Bodos
-        ---
-
-        # Looming
-
-        The technique of looming process is consists of drafting, denting and heald
+type: Process
+title: Looming
+description: Traditional pre-weaving process in Bodo handloom preparation.
+tags:
+  - Bodo
+  - handloom
+  - weaving
+  - cotton
+status: draft
+sources:
+  - id: traditional-weaving-process
+resource: ../../01_raw_data/processes/Traditionalweaving_Process.pdf
+title: Traditional Weaving Process of the Bodos
+---
+        
+# Looming
+        
+The technique of looming process is consists of drafting, denting and heald
 knitting for proper fitting up of warp on the loom that to complete the
 necessary arrangements for weaving.  Drafting- This process is known as Nw
 khonnai in Bodo. Traditionally, the white strong cotton thread used for drafting.

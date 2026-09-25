@@ -15,10 +15,9 @@ def create_sections(text: str) -> list[DocumentSection]:
     current_content = []
     
     for line in text.splitlines():
+        
         if is_section_heading(line):
-            title = re.sub(r"^\d+\.\s+", "", line)
-            
-            if current_title is not None:
+            if current_content:
                 sections.append(
                     DocumentSection(
                         title=current_title,
@@ -26,26 +25,45 @@ def create_sections(text: str) -> list[DocumentSection]:
                     )
                 )
             
+            title = re.sub(r"^\d+\.\s+", "", line)
+            
+            # if current_title is not None:
+            #     sections.append(
+            #         DocumentSection(
+            #             title=current_title,
+            #             content="\n".join(current_content).strip()
+            #         )
+            #     )
+            
             current_title = title
             current_content = []
         else:
             current_content.append(line)
             
-    if current_title is not None:
+    if current_content:
         sections.append(
             DocumentSection(
                 title=current_title,
                 content="\n".join(current_content).strip()
             )
         )
+            
+    # if current_title is not None:
+    #     sections.append(
+    #         DocumentSection(
+    #             title=current_title,
+    #             content="\n".join(current_content).strip()
+    #         )
+    #     )
     
-    if not sections and text.strip():
-        sections.append(
-            DocumentSection(
-                title=None,
-                content=text.strip()
-            )
-        )
+    #fallback if there was no heading detected
+    # if not sections and text.strip():
+    #     sections.append(
+    #         DocumentSection(
+    #             title=None,
+    #             content=text.strip()
+    #         )
+    #     )
     
     return sections
 
@@ -57,21 +75,24 @@ def get_section_text(sections: list[DocumentSection]) -> str:
 def is_section_heading(line: str) -> bool:
     return bool(re.match(r"^\d+\.\s+.+$", line))
         
-# text = """Traditional Weaving
+text = """
 
-# 1. Ginning
-# Ginning is the first process.
-# It's important
+Traditional Weaving
+It's a process
 
-# 2. Spinning
-# Spinning prepares the yarn.
+1. Ginning
+Ginning is the first process.
+It's important
 
-# 3. Reeling
-# Reeling is another process.
-# """
+2. Spinning
+Spinning prepares the yarn.
 
-# sections = create_sections(text)
+3. Reeling
+Reeling is another process.
+"""
 
-# for section in sections:
-#     print(section)
+sections = create_sections(text)
+
+for section in sections:
+    print(section)
 

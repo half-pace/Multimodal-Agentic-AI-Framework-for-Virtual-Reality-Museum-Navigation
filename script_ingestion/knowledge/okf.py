@@ -35,7 +35,7 @@ def create_okf_content(section: DocumentSection, source: str) -> str:
     
     
 def write_okf_file(content: str, output_path: Path) -> None:
-    """"""
+    """Receives the OKF content and writes it to the output_path"""
     try:
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(content, encoding="utf-8")
@@ -44,5 +44,11 @@ def write_okf_file(content: str, output_path: Path) -> None:
         print(f"Failed to write OKF file {output_path}: {error}")
     
     
-    
-    
+def generate_okf_concepts(sections: list[DocumentSection], source: str, output_dir: Path) -> None:
+    for section in sections:
+        if section.title is not None:
+            title = create_slug(section.title)
+            content = create_okf_content(section, source)
+            output_path = output_dir / f"{title.md}"
+            write_okf_file(content, output_path)
+

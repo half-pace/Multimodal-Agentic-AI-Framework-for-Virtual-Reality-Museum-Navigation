@@ -39,6 +39,14 @@ def create_sections(text: str) -> list[DocumentSection]:
             )
         )
     
+    if not sections and text.strip():
+        sections.append(
+            DocumentSection(
+                title=None,
+                content=text.strip()
+            )
+        )
+    
     return sections
 
 def get_section_text(sections: list[DocumentSection]) -> str:

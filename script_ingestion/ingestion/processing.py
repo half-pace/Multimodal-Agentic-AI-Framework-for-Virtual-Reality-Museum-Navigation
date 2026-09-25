@@ -56,6 +56,8 @@ def process_discovered_files(folder: Path, root: Path) -> None:
         relative_source = get_relative_source(file, root)
         normalized_document = process_document(file, relative_source)
         received_hash = calculate_hash(get_section_text(normalized_document.sections))
+        print(f"{relative_source} -> "
+              f"{received_hash}")
         
         doc_status = get_processing_status(relative_source, received_hash)
         

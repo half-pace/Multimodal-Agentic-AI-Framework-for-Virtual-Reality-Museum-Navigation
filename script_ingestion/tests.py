@@ -3,13 +3,14 @@
 from pathlib import Path
 from ingestion.processing import run_ingestion, process_document, extract_content
 from cleaning import normalize_whitespace
-from knowledge.section import create_sections
+from knowledge.section import create_sections, DocumentSection
+from knowledge.okf import create_okf_content
 
 
-raw_folder = Path("knowledge_base/01_raw_data")
-manifest_path = Path("knowledge_base/document_manifest.json")
+# raw_folder = Path("knowledge_base/01_raw_data")
+# manifest_path = Path("knowledge_base/document_manifest.json")
 
-run_ingestion(raw_folder, manifest_path)
+# run_ingestion(raw_folder, manifest_path)
 
 #temporary
 # path = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf")
@@ -29,3 +30,11 @@ run_ingestion(raw_folder, manifest_path)
 #     print(section.title)
 #     print(section.content[:200])
 #     print("-" * 50)
+
+section = DocumentSection(
+    title="Ginning",
+    content="The ginning is the first pre weaving process..."
+)
+
+source = "processes/Traditionalweaving_Process.pdf"
+print(create_okf_content(section, source))

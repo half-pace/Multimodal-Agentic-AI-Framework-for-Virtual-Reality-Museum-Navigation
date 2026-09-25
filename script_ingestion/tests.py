@@ -13,33 +13,33 @@ from knowledge.okf import create_okf_content, write_okf_file
 # run_ingestion(raw_folder, manifest_path)
 
 #temporary
-# path = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf")
+path = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf")
 
-# raw_content = extract_content(path)
-# cleaned_content = normalize_whitespace(raw_content)
-# # for line in cleaned_content.splitlines()[:15]:
-# #     print(repr(line))
-# print("Extracted Characters: ", len(cleaned_content))
+raw_content = extract_content(path)
+cleaned_content = normalize_whitespace(raw_content)
+# for line in cleaned_content.splitlines()[:15]:
+#     print(repr(line))
+print("Extracted Characters: ", len(cleaned_content))
 
-# sections = create_sections(cleaned_content)
-# print("Number of sections: ", len(sections))
+sections = create_sections(cleaned_content)
+print("Number of sections: ", len(sections))
 
-# # normalized_document = process_document(path, "processes/Traditionalweaving_Process.pdf")
+# normalized_document = process_document(path, "processes/Traditionalweaving_Process.pdf")
 
-# for section in sections:
-#     print(section.title)
-#     print(section.content[:200])
-#     print("-" * 50)
+for section in sections:
+    print(section.title)
+    print(section.content[:200])
+    print("-" * 50)
 
-section = DocumentSection(
-    title="Ginning",
-    content="The ginning is the first pre weaving process..."
-)
+# section = DocumentSection(
+#     title="Ginning",
+#     content="The ginning is the first pre weaving process..."
+# )
 
-source = "processes/Traditionalweaving_Process.pdf"
-content = create_okf_content(section, source)
+# source = "processes/Traditionalweaving_Process.pdf"
+# content = create_okf_content(section, source)
 
-output_path = Path("knowledge_base/04_okf/processes/ginning.md")
+# output_path = Path("knowledge_base/04_okf/processes/ginning.md")
 
-write_okf_file(content, output_path)
-print(f"OKF file written to: {output_path}")
+# write_okf_file(content, output_path)
+# print(f"OKF file written to: {output_path}")

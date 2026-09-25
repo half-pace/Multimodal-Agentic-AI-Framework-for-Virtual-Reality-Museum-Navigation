@@ -75,24 +75,24 @@ def get_section_text(sections: list[DocumentSection]) -> str:
 def is_section_heading(line: str) -> bool:
     return bool(re.match(r"^\d+\.\s+.+$", line))
         
-text = """
+# text = """
 
-Traditional Weaving
-It's a process
+# Traditional Weaving
+# It's a process
 
-1. Ginning
-Ginning is the first process.
-It's important
+# 1. Ginning
+# Ginning is the first process.
+# It's important
 
-2. Spinning
-Spinning prepares the yarn.
+# 2. Spinning
+# Spinning prepares the yarn.
 
-3. Reeling
-Reeling is another process.
-"""
+# 3. Reeling
+# Reeling is another process.
+# """
 
-sections = create_sections(text)
+# sections = create_sections(text)
 
-for section in sections:
-    print(section)
+# for section in sections:
+#     print(section)
 

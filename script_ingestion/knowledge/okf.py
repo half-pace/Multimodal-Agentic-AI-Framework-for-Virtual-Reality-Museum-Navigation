@@ -2,6 +2,7 @@
 import re
 import textwrap 
 from knowledge.section import DocumentSection
+from pathlib import Path
 
 """Functions"""
 def create_slug(title: str) -> str:
@@ -33,7 +34,15 @@ def create_okf_content(section: DocumentSection, source: str) -> str:
     """).strip()
     
     
-
+def write_okf_file(content: str, output_path: Path) -> None:
+    """"""
+    try:
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(content, encoding="utf-8")
+    
+    except OSError as error:
+        print(f"Failed to write OKF file {output_path}: {error}")
+    
     
     
     

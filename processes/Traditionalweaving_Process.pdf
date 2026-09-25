@@ -10,7 +10,7 @@ tags:
 status: draft
 sources:
   - id: traditional-weaving-process
-    resource: ../../01_raw_data/processes/Traditionalweaving_Process.pdf
+    resource: ../../01_raw_data/processes\Traditionalweaving_Process.pdf
     title: Traditional Weaving Process of the Bodos
 ---
 

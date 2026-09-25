@@ -4,7 +4,7 @@ from pathlib import Path
 from ingestion.processing import run_ingestion, process_document, extract_content
 from cleaning import normalize_whitespace
 from knowledge.section import create_sections, DocumentSection
-from knowledge.okf import create_okf_content
+from knowledge.okf import create_okf_content, write_okf_file
 
 
 # raw_folder = Path("knowledge_base/01_raw_data")
@@ -37,4 +37,9 @@ section = DocumentSection(
 )
 
 source = "processes/Traditionalweaving_Process.pdf"
-print(create_okf_content(section, source))
+content = create_okf_content(section, source)
+
+output_path = Path("knowledge_base/04_okf/processes/ginning.md")
+
+write_okf_file(content, output_path)
+print(f"OKF file written to: {output_path}")

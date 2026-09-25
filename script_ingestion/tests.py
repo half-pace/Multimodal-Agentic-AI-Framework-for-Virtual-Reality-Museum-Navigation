@@ -53,3 +53,9 @@ cleaned_content = normalize_whitespace(raw_content)
 sections = create_sections(cleaned_content)
 output_dir = Path("knowledge_base/04_okf/processes")
 generate_okf_concepts(sections, source, output_dir)
+generated_files = list(output_dir.glob("*.md"))
+
+print("Number of OKF files:", len(generated_files))
+
+for file in generated_files:
+    print(file)

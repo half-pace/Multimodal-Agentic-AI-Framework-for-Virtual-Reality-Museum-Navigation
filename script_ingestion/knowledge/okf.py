@@ -49,6 +49,6 @@ def generate_okf_concepts(sections: list[DocumentSection], source: str, output_d
         if section.title is not None:
             title = create_slug(section.title)
             content = create_okf_content(section, source)
-            output_path = output_dir / f"{title.md}"
+            output_path = output_dir / f"{title}.md"
             write_okf_file(content, output_path)
 

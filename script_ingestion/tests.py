@@ -7,10 +7,10 @@ from knowledge.section import create_sections, DocumentSection
 from knowledge.okf import create_okf_content, write_okf_file, generate_okf_concepts
 
 
-# raw_folder = Path("knowledge_base/01_raw_data")
-# manifest_path = Path("knowledge_base/document_manifest.json")
+raw_folder = Path("knowledge_base/01_raw_data")
+manifest_path = Path("knowledge_base/document_manifest.json")
 
-# run_ingestion(raw_folder, manifest_path)
+run_ingestion(raw_folder, manifest_path)
 
 #temporary
 # path = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf")
@@ -44,18 +44,18 @@ from knowledge.okf import create_okf_content, write_okf_file, generate_okf_conce
 # write_okf_file(content, output_path)
 # print(f"OKF file written to: {output_path}")
 
-path = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf")
+# path = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf")
 
-source = "processes/Traditionalweaving_Process.pdf"
+# source = "processes/Traditionalweaving_Process.pdf"
 
-raw_content = extract_content(path)
-cleaned_content = normalize_whitespace(raw_content)
-sections = create_sections(cleaned_content)
-output_dir = Path("knowledge_base/04_okf/processes")
-generate_okf_concepts(sections, source, output_dir)
-generated_files = list(output_dir.glob("*.md"))
+# raw_content = extract_content(path)
+# cleaned_content = normalize_whitespace(raw_content)
+# sections = create_sections(cleaned_content)
+# output_dir = Path("knowledge_base/04_okf/processes")
+# generate_okf_concepts(sections, source, output_dir)
+# generated_files = list(output_dir.glob("*.md"))
 
-print("Number of OKF files:", len(generated_files))
+# print("Number of OKF files:", len(generated_files))
 
-for file in generated_files:
-    print(file)
+# for file in generated_files:
+#     print(file)

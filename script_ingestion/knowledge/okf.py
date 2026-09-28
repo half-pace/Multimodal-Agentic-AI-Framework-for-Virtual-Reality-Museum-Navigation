@@ -52,3 +52,15 @@ def generate_okf_concepts(sections: list[DocumentSection], source: str, output_d
             output_path = output_dir / f"{title}.md"
             write_okf_file(content, output_path)
 
+def generate_okf_index(output_dir: Path) -> None:
+    """Find every .md file, ignore index.md if it exists already and rwites everything to index.md"""
+    links = []
+    output_path = output_dir / "index.md"
+    for file in output_dir.rglob("*.md"):
+        if file.name != "index.md":
+            relative_path = file.relative_to(output_dir).as_posix()
+            links.append(f"- [{file.stem.title()}]({relative_path})")
+            
+    content = "# Knowledge Bundle\n\n" + "\n".join(links)
+    
+    write_okf_file(content, output_path)

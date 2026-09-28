@@ -64,3 +64,23 @@ def generate_okf_index(output_dir: Path) -> None:
     content = "# Knowledge Bundle\n\n" + "\n".join(links)
     
     write_okf_file(content, output_path)
+    
+
+def validate_okf_file(path: Path) -> bool:
+    content = path.read_text(encoding="utf-8")
+    lines = content.splitlines()
+    found_opening = False
+    found_closing = False
+    for index, line in enumerate(lines):
+        if line == "---":
+            if found_opening:
+                closing_index = index
+                found_closing = True
+                break
+            found_opening = True
+            
+    if not found_closing:
+        return False
+    
+    frontmatter_lines = lines[1 : closing_index]
+    body_lines = lines[closing_index + 1 : ]

@@ -1,7 +1,12 @@
 """imports"""
-
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from dataclasses import dataclass, field
 import random
+
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=500,
+    chunk_overlap=50
+)
 
 """functions"""
 def generate_id():
@@ -45,3 +50,20 @@ def create_chunks(text: str, chunk_size: int, overlap: int, source: str, documen
         )
         final_chunks.append(chunk_obj)
     return final_chunks
+
+def split_with_langchain(text: str, chunk_size: int, chunk_overlap: int):
+    """Creates chunks using langchain"""
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=chunk_size,
+        chunk_overlap=chunk_overlap
+    )
+    
+    chunks = splitter.split_text(text)
+    return chunks
+
+
+test1 = "abcdefghij"
+size = 4
+overlap = 2
+testing = split_with_langchain(test1, size, overlap)
+print(testing)

@@ -4,7 +4,13 @@ from pathlib import Path
 from ingestion.processing import run_ingestion, process_document, extract_content
 from cleaning import normalize_whitespace
 from knowledge.section import create_sections, DocumentSection
-from knowledge.okf import create_okf_content, write_okf_file, generate_okf_concepts, generate_okf_index
+from knowledge.okf import (
+    create_okf_content, 
+    write_okf_file, 
+    generate_okf_concepts, 
+    generate_okf_index,
+    validate_okf_file
+)
 
 
 # raw_folder = Path("knowledge_base/01_raw_data")
@@ -45,6 +51,7 @@ from knowledge.okf import create_okf_content, write_okf_file, generate_okf_conce
 # print(f"OKF file written to: {output_path}")
 
 path = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf")
+path1 = Path("knowledge_base/04_okf/processes/ginning.md")
 
 source = "processes/Traditionalweaving_Process.pdf"
 
@@ -63,4 +70,6 @@ for file in generated_files:
 generate_okf_index(output_dir)
 index_path = output_dir / "index.md"
 print("Index exists: ", index_path.exists())
+validation_res = validate_okf_file(path1)
+print("Validation is: ", validation_res)
 print(index_path.read_text(encoding="utf-8"))

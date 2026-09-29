@@ -71,6 +71,11 @@ def validate_okf_file(path: Path) -> bool:
     lines = content.splitlines()
     found_opening = False
     found_closing = False
+    required_fields = ["type:", "title:", "sources:"]
+    
+    if not lines or lines[0] != "---":
+        return False
+    
     for index, line in enumerate(lines):
         if line == "---":
             if found_opening:
@@ -84,3 +89,12 @@ def validate_okf_file(path: Path) -> bool:
     
     frontmatter_lines = lines[1 : closing_index]
     body_lines = lines[closing_index + 1 : ]
+    
+    for field in required_fields:
+        if not any(line.startswith(field) for line in frontmatter_lines):
+            return False
+        
+    if not any(line.strip() for line in body_lines):
+        return False
+    
+    return True

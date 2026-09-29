@@ -76,4 +76,4 @@ print("Validation is: ", validation_res)
 print(index_path.read_text(encoding="utf-8"))
 
 bundle_result = validate_okf_bundle(output_dir)
-print("Bundle validation: ", bundle_result)
+print(f"Bundle validation: {bundle_result}")

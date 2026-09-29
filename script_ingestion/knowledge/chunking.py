@@ -51,19 +51,54 @@ def create_chunks(text: str, chunk_size: int, overlap: int, source: str, documen
         final_chunks.append(chunk_obj)
     return final_chunks
 
-def split_with_langchain(text: str, chunk_size: int, chunk_overlap: int):
+def split_with_langchain(text: str, chunk_size: int, chunk_overlap: int, source: str, document_id: str):
     """Creates chunks using langchain"""
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap
     )
     
+    res_chunks = []
+    
     chunks = splitter.split_text(text)
-    return chunks
+    for i, chunk in enumerate(chunks):
+        chunk_obj = Chunk(
+            text=chunk,
+            source=source,
+            chunk_index=i,
+            document_id=document_id,
+            chunk_id=f"{document_id}_{i}"
+        )
+        res_chunks.append(chunk_obj)
+    return res_chunks
+    
 
 
-test1 = "abcdefghij"
-size = 4
-overlap = 2
-testing = split_with_langchain(test1, size, overlap)
-print(testing)
+# test1 = "abcdefghij"
+# test2 = """
+# Ginning is the first pre-weaving process of the Bodo traditional handloom.
+# It involves separating cotton fibres from the seeds.
+# The cleaned fibres are then prepared for the spinning process.
+# """
+# size = 4
+# overlap = 2
+# testing = split_with_langchain(test2, 100, 20)
+# for index, chunk in enumerate(testing):
+#     print(f"\nChunk {index}: ")
+#     print(chunk)
+test_text = """
+Ginning is the first pre-weaving process of the Bodo traditional handloom.
+It involves separating cotton fibres from the seeds.
+The cleaned fibres are then prepared for the spinning process.
+"""
+
+chunks = split_with_langchain(
+    text=test_text,
+    chunk_size=100,
+    chunk_overlap=20,
+    source="processes/Traditionalweaving_Process.pdf",
+    document_id="TEST_DOC_001"
+)
+for i, chunk in enumerate(chunks):
+    print(f"\nChunk Obj {i}: ")
+    print(chunk)

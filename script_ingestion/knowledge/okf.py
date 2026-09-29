@@ -98,3 +98,18 @@ def validate_okf_file(path: Path) -> bool:
         return False
     
     return True
+
+def validate_okf_bundle(output_dir: Path) -> bool:
+    all_valid = True
+    
+    for file in output_dir.rglob("*.md"):
+        if file.name == "index.md":
+            continue
+        
+        result = validate_okf_file(file)
+        print(f"{file} : {result}")
+        
+    if not result:
+        all_valid = False
+        
+    return all_valid

@@ -9,7 +9,8 @@ from knowledge.okf import (
     write_okf_file, 
     generate_okf_concepts, 
     generate_okf_index,
-    validate_okf_file
+    validate_okf_file,
+    validate_okf_bundle
 )
 
 
@@ -73,3 +74,6 @@ print("Index exists: ", index_path.exists())
 validation_res = validate_okf_file(path1)
 print("Validation is: ", validation_res)
 print(index_path.read_text(encoding="utf-8"))
+
+bundle_result = validate_okf_bundle(output_dir)
+print("Bundle validation: ", bundle_result)

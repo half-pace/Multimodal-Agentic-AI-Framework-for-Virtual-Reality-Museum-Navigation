@@ -9,17 +9,15 @@ splitter = RecursiveCharacterTextSplitter(
 )
 
 """functions"""
-def generate_id():
-    chunk_id_gen = random.randint(0, 5)
-    return chunk_id_gen
-
 @dataclass
 class Chunk:
     text: str
     source: str
     document_id: str
     chunk_index: int
-    chunk_id: str = field(default_factory=generate_id)
+    concept: str
+    modality: str
+    chunk_id: str 
     
 def chunk_text(text: str, chunk_size: int, overlap: int) -> list[str]:
     if chunk_size <= 0:
@@ -51,7 +49,7 @@ def create_chunks(text: str, chunk_size: int, overlap: int, source: str, documen
         final_chunks.append(chunk_obj)
     return final_chunks
 
-def split_with_langchain(text: str, chunk_size: int, chunk_overlap: int, source: str, document_id: str):
+def split_with_langchain(text: str, chunk_size: int, chunk_overlap: int, source: str, document_id: str, concept: str, modality: str):
     """Creates chunks using langchain"""
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
@@ -67,7 +65,9 @@ def split_with_langchain(text: str, chunk_size: int, chunk_overlap: int, source:
             source=source,
             chunk_index=i,
             document_id=document_id,
-            chunk_id=f"{document_id}_{i}"
+            concept=concept,
+            modality=modality,
+            chunk_id=f"{document_id}_{i}",
         )
         res_chunks.append(chunk_obj)
     return res_chunks
@@ -97,7 +97,9 @@ chunks = split_with_langchain(
     chunk_size=100,
     chunk_overlap=20,
     source="processes/Traditionalweaving_Process.pdf",
-    document_id="TEST_DOC_001"
+    document_id="TEST_DOC_001",
+    concept="Ginning",
+    modality="pdf"
 )
 for i, chunk in enumerate(chunks):
     print(f"\nChunk Obj {i}: ")

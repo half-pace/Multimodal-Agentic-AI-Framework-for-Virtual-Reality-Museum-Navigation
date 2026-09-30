@@ -2,6 +2,7 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from dataclasses import dataclass, field
 from pathlib import Path
+import yaml
 
 splitter = RecursiveCharacterTextSplitter(
     chunk_size=500,
@@ -77,13 +78,40 @@ def read_okf_file(path: Path) -> str:
     content = path.read_text(encoding="utf-8")
     return content
 
-
+def parse_okf_frontmatter(content: str):
+    """Parses OKF frontmatter"""
+    lines = content.splitlines()
+    found_opening = False
+    found_closing = False
+    
+    if not lines or lines[0] != "---":
+            return False
+    
+    for index, line in enumerate(lines):
+            if line == "---":
+                if found_opening:
+                    closing_index = index
+                    found_closing = True
+                    break
+                found_opening = True
+                
+    if not found_closing:
+        return False
+                
+    frontmatter_lines = lines[1: closing_index]
+    res_frontmatter = "\n".join(frontmatter_lines)
+        
+    resultant_metadata = yaml.safe_load(res_frontmatter)
+    return resultant_metadata
+    
+    
 
 
 
 path = Path("knowledge_base/04_okf/processes/ginning.md")
 res = read_okf_file(path)
-print(res)
+metadata = parse_okf_frontmatter(res)
+print(metadata)
 
 # test1 = "abcdefghij"
 # test2 = """

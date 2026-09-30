@@ -2,7 +2,7 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from dataclasses import dataclass, field
 from pathlib import Path
-import yaml
+import yaml, uuid
 
 splitter = RecursiveCharacterTextSplitter(
     chunk_size=500,
@@ -129,15 +129,40 @@ def parse_okf_body(content: str) -> str:
     
     return res_body
     
+def process_okf_file(path: Path) -> list[Chunk]:
+    """Processes one okf file"""
+    content_file = read_okf_file(path)
+    metadata = parse_okf_frontmatter(content_file)
+    body = parse_okf_body(content_file)
+    concept = metadata["title"]
+    source = metadata["sources"][0]["resource"]
+    modality = Path(metadata["sources"][0]["resource"]).suffix.lstrip(".")
+    document_id = str(uuid.uuid4())
+    chunk_size = 100
+    chunk_overlap = 20
+    chunks = split_with_langchain(
+        body,
+        chunk_size,
+        chunk_overlap,
+        source,
+        document_id,
+        concept,
+        modality
+    )
 
+    return chunks
 
 
 path = Path("knowledge_base/04_okf/processes/ginning.md")
-res = read_okf_file(path)
-metadata = parse_okf_frontmatter(res)
-body = parse_okf_body(res)
-print(metadata)
-print(body)
+# res = read_okf_file(path)
+# metadata = parse_okf_frontmatter(res)
+# body = parse_okf_body(res)
+# print(metadata)
+# print(body)
+res_chunk = process_okf_file(path)
+for i, chunk in enumerate(res_chunk):
+    print(f"\nChunk Obj {i}: ")
+    print(chunk)
 
 # test1 = "abcdefghij"
 # test2 = """

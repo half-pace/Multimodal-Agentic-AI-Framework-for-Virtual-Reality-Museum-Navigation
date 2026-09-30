@@ -1,7 +1,7 @@
 """imports"""
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from dataclasses import dataclass, field
-import random
+from pathlib import Path
 
 splitter = RecursiveCharacterTextSplitter(
     chunk_size=500,
@@ -86,21 +86,21 @@ def split_with_langchain(text: str, chunk_size: int, chunk_overlap: int, source:
 # for index, chunk in enumerate(testing):
 #     print(f"\nChunk {index}: ")
 #     print(chunk)
-test_text = """
-Ginning is the first pre-weaving process of the Bodo traditional handloom.
-It involves separating cotton fibres from the seeds.
-The cleaned fibres are then prepared for the spinning process.
-"""
+# test_text = """
+# Ginning is the first pre-weaving process of the Bodo traditional handloom.
+# It involves separating cotton fibres from the seeds.
+# The cleaned fibres are then prepared for the spinning process.
+# """
 
-chunks = split_with_langchain(
-    text=test_text,
-    chunk_size=100,
-    chunk_overlap=20,
-    source="processes/Traditionalweaving_Process.pdf",
-    document_id="TEST_DOC_001",
-    concept="Ginning",
-    modality="pdf"
-)
-for i, chunk in enumerate(chunks):
-    print(f"\nChunk Obj {i}: ")
-    print(chunk)
+# chunks = split_with_langchain(
+#     text=test_text,
+#     chunk_size=100,
+#     chunk_overlap=20,
+#     source="processes/Traditionalweaving_Process.pdf",
+#     document_id="TEST_DOC_001",
+#     concept="Ginning",
+#     modality="pdf"
+# )
+# for i, chunk in enumerate(chunks):
+#     print(f"\nChunk Obj {i}: ")
+#     print(chunk)

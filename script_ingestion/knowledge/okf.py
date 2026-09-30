@@ -24,8 +24,8 @@ tags:
 status: draft
 sources:
   - id: traditional-weaving-process
-resource: ../../01_raw_data/{source}
-title: Traditional Weaving Process of the Bodos
+    resource: ../../01_raw_data/{source}
+    title: Traditional Weaving Process of the Bodos
 ---
         
 # {section.title}

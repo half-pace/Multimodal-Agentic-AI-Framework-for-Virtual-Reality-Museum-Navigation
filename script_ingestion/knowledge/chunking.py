@@ -72,7 +72,18 @@ def split_with_langchain(text: str, chunk_size: int, chunk_overlap: int, source:
         res_chunks.append(chunk_obj)
     return res_chunks
     
+def read_okf_file(path: Path) -> str:
+    """Reads okf file from the okf directory"""
+    content = path.read_text(encoding="utf-8")
+    return content
 
+
+
+
+
+path = Path("knowledge_base/04_okf/processes/ginning.md")
+res = read_okf_file(path)
+print(res)
 
 # test1 = "abcdefghij"
 # test2 = """

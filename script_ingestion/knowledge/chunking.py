@@ -78,7 +78,7 @@ def read_okf_file(path: Path) -> str:
     content = path.read_text(encoding="utf-8")
     return content
 
-def parse_okf_frontmatter(content: str):
+def parse_okf_frontmatter(content: str) -> dict[str]:
     """Parses OKF frontmatter"""
     lines = content.splitlines()
     found_opening = False
@@ -104,6 +104,30 @@ def parse_okf_frontmatter(content: str):
     resultant_metadata = yaml.safe_load(res_frontmatter)
     return resultant_metadata
     
+def parse_okf_body(content: str) -> str:
+    """Parses OKF body"""
+    lines = content.splitlines()
+    found_opening = False
+    found_closing = False
+    
+    if not lines or lines[0] != "---":
+        return False
+    
+    for index, line in enumerate(lines):
+        if line == "---":
+            if found_opening:
+                closing_index = index
+                found_closing = True
+                break
+            found_opening = True
+            
+    if not found_closing:
+        return False
+    
+    body_lines = lines[closing_index + 1: ]
+    res_body = "\n".join(body_lines).strip()
+    
+    return res_body
     
 
 
@@ -111,7 +135,9 @@ def parse_okf_frontmatter(content: str):
 path = Path("knowledge_base/04_okf/processes/ginning.md")
 res = read_okf_file(path)
 metadata = parse_okf_frontmatter(res)
+body = parse_okf_body(res)
 print(metadata)
+print(body)
 
 # test1 = "abcdefghij"
 # test2 = """

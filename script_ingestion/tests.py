@@ -12,6 +12,20 @@ from knowledge.okf import (
     validate_okf_file,
     validate_okf_bundle
 )
+from knowledge.document import (
+    Document,
+    calculate_hash,
+    create_document,
+)
+from ingestion.manifest import (
+    find_document,
+    register_document,
+    update_document
+    #document_registry
+)
+from knowledge.chunking import (
+    get_or_create_document
+)
 
 
 # raw_folder = Path("knowledge_base/01_raw_data")
@@ -51,29 +65,60 @@ from knowledge.okf import (
 # write_okf_file(content, output_path)
 # print(f"OKF file written to: {output_path}")
 
-path = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf")
-path1 = Path("knowledge_base/04_okf/processes/ginning.md")
+# path = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf")
+# path1 = Path("knowledge_base/04_okf/processes/ginning.md")
 
-source = "processes/Traditionalweaving_Process.pdf"
+# source = "processes/Traditionalweaving_Process.pdf"
 
-raw_content = extract_content(path)
-cleaned_content = normalize_whitespace(raw_content)
-sections = create_sections(cleaned_content)
-output_dir = Path("knowledge_base/04_okf/processes")
-generate_okf_concepts(sections, source, output_dir)
-generated_files = list(output_dir.glob("*.md"))
+# raw_content = extract_content(path)
+# cleaned_content = normalize_whitespace(raw_content)
+# sections = create_sections(cleaned_content)
+# output_dir = Path("knowledge_base/04_okf/processes")
+# generate_okf_concepts(sections, source, output_dir)
+# generated_files = list(output_dir.glob("*.md"))
 
-print("Number of OKF files:", len(generated_files))
+# print("Number of OKF files:", len(generated_files))
 
-for file in generated_files:
-    print(file)
+# for file in generated_files:
+#     print(file)
 
-generate_okf_index(output_dir)
-index_path = output_dir / "index.md"
-print("Index exists: ", index_path.exists())
-validation_res = validate_okf_file(path1)
-print("Validation is: ", validation_res)
-print(index_path.read_text(encoding="utf-8"))
+# generate_okf_index(output_dir)
+# index_path = output_dir / "index.md"
+# print("Index exists: ", index_path.exists())
+# validation_res = validate_okf_file(path1)
+# print("Validation is: ", validation_res)
+# print(index_path.read_text(encoding="utf-8"))
 
-bundle_result = validate_okf_bundle(output_dir)
-print(f"Bundle validation: {bundle_result}")
+# bundle_result = validate_okf_bundle(output_dir)
+# print(f"Bundle validation: {bundle_result}")
+
+document_registry = {}
+
+doc1 = get_or_create_document(
+    "processes/Traditionalweaving_Process.pdf",
+    "Ginning content"
+)
+
+print("Test 1:", doc1)
+
+
+doc2 = get_or_create_document(
+    "processes/Traditionalweaving_Process.pdf",
+    "Ginning content"
+)
+
+print("Test 2:", doc2)
+
+print("Same document ID:", doc1.document_id == doc2.document_id)
+print("Same version:", doc1.version == doc2.version)
+
+
+doc3 = get_or_create_document(
+    "processes/Traditionalweaving_Process.pdf",
+    "Ginning content changed"
+)
+
+print("Test 3:", doc3)
+
+print("Same document ID:", doc1.document_id == doc3.document_id)
+print("Version:", doc3.version)

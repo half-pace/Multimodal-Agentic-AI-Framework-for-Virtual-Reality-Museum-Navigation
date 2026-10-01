@@ -1,6 +1,17 @@
 """imports"""
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from knowledge.document import (
+    Document,
+    calculate_hash,
+    create_document,
+)
+from ingestion.manifest import (
+    document_registry,
+    find_document,
+    register_document,
+    update_document
+)
 from pathlib import Path
 import yaml, uuid
 
@@ -152,17 +163,32 @@ def process_okf_file(path: Path) -> list[Chunk]:
 
     return chunks
 
+def get_or_create_document(source: str, content: str) -> Document:
+    """"""
+    content_hash = calculate_hash(content)
+    existing_doc = find_document(source)
+    if existing_doc is None:
+        new_doc = create_document(source, content_hash)
+        register_document(new_doc)
+        return new_doc
+    else:
+        if existing_doc.content_hash == content_hash:
+            return existing_doc
+        else:
+            update_document(existing_doc, content_hash)
+            return existing_doc
 
-path = Path("knowledge_base/04_okf/processes/ginning.md")
-# res = read_okf_file(path)
-# metadata = parse_okf_frontmatter(res)
-# body = parse_okf_body(res)
-# print(metadata)
-# print(body)
-res_chunk = process_okf_file(path)
-for i, chunk in enumerate(res_chunk):
-    print(f"\nChunk Obj {i}: ")
-    print(chunk)
+
+# path = Path("knowledge_base/04_okf/processes/ginning.md")
+# # res = read_okf_file(path)
+# # metadata = parse_okf_frontmatter(res)
+# # body = parse_okf_body(res)
+# # print(metadata)
+# # print(body)
+# res_chunk = process_okf_file(path)
+# for i, chunk in enumerate(res_chunk):
+#     print(f"\nChunk Obj {i}: ")
+#     print(chunk)
 
 # test1 = "abcdefghij"
 # test2 = """

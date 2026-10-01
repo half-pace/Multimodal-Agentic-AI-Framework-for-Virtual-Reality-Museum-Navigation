@@ -13,7 +13,7 @@ from ingestion.manifest import (
     update_document
 )
 from pathlib import Path
-import yaml, uuid
+import yaml
 
 splitter = RecursiveCharacterTextSplitter(
     chunk_size=500,
@@ -148,7 +148,7 @@ def process_okf_file(path: Path) -> list[Chunk]:
     concept = metadata["title"]
     source = metadata["sources"][0]["resource"]
     modality = Path(metadata["sources"][0]["resource"]).suffix.lstrip(".")
-    document_id = str(uuid.uuid4())
+    document_id = get_or_create_document(source, body).document_id
     chunk_size = 100
     chunk_overlap = 20
     chunks = split_with_langchain(
@@ -177,46 +177,3 @@ def get_or_create_document(source: str, content: str) -> Document:
         else:
             update_document(existing_doc, content_hash)
             return existing_doc
-
-
-# path = Path("knowledge_base/04_okf/processes/ginning.md")
-# # res = read_okf_file(path)
-# # metadata = parse_okf_frontmatter(res)
-# # body = parse_okf_body(res)
-# # print(metadata)
-# # print(body)
-# res_chunk = process_okf_file(path)
-# for i, chunk in enumerate(res_chunk):
-#     print(f"\nChunk Obj {i}: ")
-#     print(chunk)
-
-# test1 = "abcdefghij"
-# test2 = """
-# Ginning is the first pre-weaving process of the Bodo traditional handloom.
-# It involves separating cotton fibres from the seeds.
-# The cleaned fibres are then prepared for the spinning process.
-# """
-# size = 4
-# overlap = 2
-# testing = split_with_langchain(test2, 100, 20)
-# for index, chunk in enumerate(testing):
-#     print(f"\nChunk {index}: ")
-#     print(chunk)
-# test_text = """
-# Ginning is the first pre-weaving process of the Bodo traditional handloom.
-# It involves separating cotton fibres from the seeds.
-# The cleaned fibres are then prepared for the spinning process.
-# """
-
-# chunks = split_with_langchain(
-#     text=test_text,
-#     chunk_size=100,
-#     chunk_overlap=20,
-#     source="processes/Traditionalweaving_Process.pdf",
-#     document_id="TEST_DOC_001",
-#     concept="Ginning",
-#     modality="pdf"
-# )
-# for i, chunk in enumerate(chunks):
-#     print(f"\nChunk Obj {i}: ")
-#     print(chunk)

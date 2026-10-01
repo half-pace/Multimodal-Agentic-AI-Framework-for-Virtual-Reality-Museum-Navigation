@@ -20,12 +20,14 @@ from knowledge.document import (
 from ingestion.manifest import (
     find_document,
     register_document,
-    update_document
-    #document_registry
+    update_document,
+    document_registry
 )
 from knowledge.chunking import (
-    get_or_create_document
+    get_or_create_document,
+    process_okf_file
 )
+
 
 
 # raw_folder = Path("knowledge_base/01_raw_data")
@@ -92,33 +94,37 @@ from knowledge.chunking import (
 # bundle_result = validate_okf_bundle(output_dir)
 # print(f"Bundle validation: {bundle_result}")
 
-document_registry = {}
+# doc1 = get_or_create_document(
+#     "processes/Traditionalweaving_Process.pdf",
+#     "Ginning content"
+# )
 
-doc1 = get_or_create_document(
-    "processes/Traditionalweaving_Process.pdf",
-    "Ginning content"
-)
-
-print("Test 1:", doc1)
+# print("Test 1:", doc1)
 
 
-doc2 = get_or_create_document(
-    "processes/Traditionalweaving_Process.pdf",
-    "Ginning content"
-)
+# doc2 = get_or_create_document(
+#     "processes/Traditionalweaving_Process.pdf",
+#     "Ginning content"
+# )
 
-print("Test 2:", doc2)
+# print("Test 2:", doc2)
 
-print("Same document ID:", doc1.document_id == doc2.document_id)
-print("Same version:", doc1.version == doc2.version)
+# print("Same document ID:", doc1.document_id == doc2.document_id)
+# print("Same version:", doc1.version == doc2.version)
 
 
-doc3 = get_or_create_document(
-    "processes/Traditionalweaving_Process.pdf",
-    "Ginning content changed"
-)
+# doc3 = get_or_create_document(
+#     "processes/Traditionalweaving_Process.pdf",
+#     "Ginning content changed"
+# )
 
-print("Test 3:", doc3)
+# print("Test 3:", doc3)
 
-print("Same document ID:", doc1.document_id == doc3.document_id)
-print("Version:", doc3.version)
+# print("Same document ID:", doc1.document_id == doc3.document_id)
+# print("Version:", doc3.version)
+path = Path("knowledge_base/04_okf/processes/ginning.md")
+
+chunks = process_okf_file(path)
+
+for chunk in chunks:
+    print(chunk.document_id)

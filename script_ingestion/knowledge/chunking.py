@@ -177,3 +177,6 @@ def get_or_create_document(source: str, content: str) -> Document:
         else:
             update_document(existing_doc, content_hash)
             return existing_doc
+
+def process_okf_directory(directory: Path) -> list[Chunk]:
+    ...

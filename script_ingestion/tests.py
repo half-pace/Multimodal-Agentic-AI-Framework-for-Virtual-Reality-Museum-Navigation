@@ -122,9 +122,17 @@ from knowledge.chunking import (
 
 # print("Same document ID:", doc1.document_id == doc3.document_id)
 # print("Version:", doc3.version)
-path = Path("knowledge_base/04_okf/processes/ginning.md")
+# path = Path("knowledge_base/04_okf/processes/ginning.md")
 
-chunks = process_okf_file(path)
+# chunks = process_okf_file(path)
 
-for chunk in chunks:
-    print(chunk.document_id)
+# for chunk in chunks:
+#     print(chunk.document_id)
+okf_directory = Path("knowledge_base/04_okf/processes")
+
+all_chunks = process_okf_directory(okf_directory)
+
+print("Total chunks:", len(all_chunks))
+
+for chunk in all_chunks:
+    print(chunk.concept, chunk.chunk_index, chunk.document_id)

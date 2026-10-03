@@ -179,4 +179,11 @@ def get_or_create_document(source: str, content: str) -> Document:
             return existing_doc
 
 def process_okf_directory(directory: Path) -> list[Chunk]:
-    ...
+    """"""
+    chunks_list = []
+    for file in directory.rglob("*.md"):
+        if file.name != "index.md":
+            chunks = process_okf_file(file)
+            chunks_list.extend(chunks)
+    return chunks_list
+            

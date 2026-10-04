@@ -7,18 +7,12 @@ from knowledge.document import (
     create_document,
 )
 from ingestion.manifest import (
-    document_registry,
     find_document,
     register_document,
     update_document
 )
 from pathlib import Path
 import yaml
-
-splitter = RecursiveCharacterTextSplitter(
-    chunk_size=500,
-    chunk_overlap=50
-)
 
 """functions"""
 @dataclass
@@ -31,35 +25,35 @@ class Chunk:
     modality: str
     chunk_id: str 
     
-def chunk_text(text: str, chunk_size: int, overlap: int) -> list[str]:
-    if chunk_size <= 0:
-        raise ValueError("Chunk size must be greater than 0")
-    elif overlap >= chunk_size:
-        raise ValueError("Overlap must be less than chunk size")
-    elif overlap < 0:
-        raise ValueError("Overlap must be greater than or equal to 0")
+# def chunk_text(text: str, chunk_size: int, overlap: int) -> list[str]:
+#     if chunk_size <= 0:
+#         raise ValueError("Chunk size must be greater than 0")
+#     elif overlap >= chunk_size:
+#         raise ValueError("Overlap must be less than chunk size")
+#     elif overlap < 0:
+#         raise ValueError("Overlap must be greater than or equal to 0")
     
-    chunked = []
-    start = 0
-    step = chunk_size - overlap
-    while start < len(text):
-        chunk = text[start:start + chunk_size]
-        chunked.append(chunk)
-        start += step
-    return chunked
+#     chunked = []
+#     start = 0
+#     step = chunk_size - overlap
+#     while start < len(text):
+#         chunk = text[start:start + chunk_size]
+#         chunked.append(chunk)
+#         start += step
+#     return chunked
 
-def create_chunks(text: str, chunk_size: int, overlap: int, source: str, document_id: str) -> list[Chunk]:
-    chunked_texts = chunk_text(text, chunk_size, overlap)
-    final_chunks = []
-    for i, chunk in enumerate(chunked_texts):
-        chunk_obj = Chunk(
-            text=chunk,
-            source=source,
-            chunk_index=i,
-            document_id=document_id
-        )
-        final_chunks.append(chunk_obj)
-    return final_chunks
+# def create_chunks(text: str, chunk_size: int, overlap: int, source: str, document_id: str) -> list[Chunk]:
+#     chunked_texts = chunk_text(text, chunk_size, overlap)
+#     final_chunks = []
+#     for i, chunk in enumerate(chunked_texts):
+#         chunk_obj = Chunk(
+#             text=chunk,
+#             source=source,
+#             chunk_index=i,
+#             document_id=document_id
+#         )
+#         final_chunks.append(chunk_obj)
+#     return final_chunks
 
 def split_with_langchain(text: str, chunk_size: int, chunk_overlap: int, source: str, document_id: str, concept: str, modality: str):
     """Creates chunks using langchain"""
@@ -115,7 +109,7 @@ def parse_okf_frontmatter(content: str) -> dict[str]:
     resultant_metadata = yaml.safe_load(res_frontmatter)
     return resultant_metadata
     
-def parse_okf_body(content: str) -> str:
+def parse_okf_body(content: str) -> str | bool:
     """Parses OKF body"""
     lines = content.splitlines()
     found_opening = False

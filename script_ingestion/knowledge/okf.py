@@ -1,6 +1,6 @@
 """Imports"""
 import re
-import textwrap 
+#import textwrap 
 from knowledge.section import DocumentSection
 from pathlib import Path
 
@@ -109,7 +109,7 @@ def validate_okf_bundle(output_dir: Path) -> bool:
         result = validate_okf_file(file)
         print(f"{file} : {result}")
         
-    if not result:
-        all_valid = False
+        if not result:
+            all_valid = False
         
     return all_valid

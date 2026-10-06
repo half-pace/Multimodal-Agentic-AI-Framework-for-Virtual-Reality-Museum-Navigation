@@ -129,11 +129,42 @@ from knowledge.chunking import (
 
 # for chunk in chunks:
 #     print(chunk.document_id)
-okf_directory = Path("knowledge_base/04_okf/processes")
+# okf_directory = Path("knowledge_base/04_okf/processes")
 
-all_chunks = process_okf_directory(okf_directory)
+# all_chunks = process_okf_directory(okf_directory)
 
-print("Total chunks:", len(all_chunks))
+# print("Total chunks:", len(all_chunks))
 
-for chunk in all_chunks:
-    print(chunk.concept, chunk.chunk_index, chunk.document_id)
+# for chunk in all_chunks:
+#     print(chunk.concept, chunk.chunk_index, chunk.document_id)
+
+path = Path("knowledge_base/01_raw_data/processes/Traditionalweaving_Process.pdf")
+
+source = "processes/Traditionalweaving_Process.pdf"
+
+raw_content = extract_content(path)
+cleaned_content = normalize_whitespace(raw_content)
+sections = create_sections(cleaned_content)
+
+document = create_document(
+    source,
+    cleaned_content
+)
+
+output_dir = Path("knowledge_base/04_okf/processes")
+
+generate_okf_concepts(
+    sections,
+    source,
+    document.document_id,
+    output_dir
+)
+
+generate_okf_index(output_dir)
+
+print("Document ID:", document.document_id)
+
+ginning_file = output_dir / "ginning.md"
+
+print("\n--- GINNING.MD ---")
+print(ginning_file.read_text(encoding="utf-8"))

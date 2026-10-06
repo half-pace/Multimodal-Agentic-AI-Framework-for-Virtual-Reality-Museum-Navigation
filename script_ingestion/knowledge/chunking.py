@@ -142,7 +142,7 @@ def process_okf_file(path: Path) -> list[Chunk]:
     concept = metadata["title"]
     source = metadata["sources"][0]["resource"]
     modality = Path(metadata["sources"][0]["resource"]).suffix.lstrip(".")
-    document_id = get_or_create_document(source, body).document_id
+    document_id = metadata["document_id"]
     chunk_size = 100
     chunk_overlap = 20
     chunks = split_with_langchain(

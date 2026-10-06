@@ -24,7 +24,6 @@ from ingestion.manifest import (
     document_registry
 )
 from knowledge.chunking import (
-    get_or_create_document,
     process_okf_file,
     process_okf_directory
 )

@@ -157,20 +157,20 @@ def process_okf_file(path: Path) -> list[Chunk]:
 
     return chunks
 
-def get_or_create_document(source: str, content: str) -> Document:
-    """"""
-    content_hash = calculate_hash(content)
-    existing_doc = find_document(source)
-    if existing_doc is None:
-        new_doc = create_document(source, content_hash)
-        register_document(new_doc)
-        return new_doc
-    else:
-        if existing_doc.content_hash == content_hash:
-            return existing_doc
-        else:
-            update_document(existing_doc, content_hash)
-            return existing_doc
+# def get_or_create_document(source: str, content: str) -> Document:
+#     """"""
+#     content_hash = calculate_hash(content)
+#     existing_doc = find_document(source)
+#     if existing_doc is None:
+#         new_doc = create_document(source, content_hash)
+#         register_document(new_doc)
+#         return new_doc
+#     else:
+#         if existing_doc.content_hash == content_hash:
+#             return existing_doc
+#         else:
+#             update_document(existing_doc, content_hash)
+#             return existing_doc
 
 def process_okf_directory(directory: Path) -> list[Chunk]:
     """"""

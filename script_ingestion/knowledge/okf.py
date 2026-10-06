@@ -10,11 +10,12 @@ def create_slug(title: str) -> str:
     new_title = re.sub(r"[^\w\d]+", "-", title)
     return new_title.lower().strip("-")
 
-def create_okf_content(section: DocumentSection, source: str) -> str:
+def create_okf_content(section: DocumentSection, source: str, document_id: str) -> str:
     #textwrap.dedent().strip() removes indentation
     return f"""---
 type: Process
 title: {section.title}
+document_id: {document_id}
 description: Traditional pre-weaving process in Bodo handloom preparation.
 tags:
   - Bodo
@@ -44,11 +45,11 @@ def write_okf_file(content: str, output_path: Path) -> None:
         print(f"Failed to write OKF file {output_path}: {error}")
     
     
-def generate_okf_concepts(sections: list[DocumentSection], source: str, output_dir: Path) -> None:
+def generate_okf_concepts(sections: list[DocumentSection], source: str, document_id: str, output_dir: Path) -> None:
     for section in sections:
         if section.title is not None:
             title = create_slug(section.title)
-            content = create_okf_content(section, source)
+            content = create_okf_content(section, source, document_id)
             output_path = output_dir / f"{title}.md"
             write_okf_file(content, output_path)
 
